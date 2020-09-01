@@ -1,6 +1,7 @@
+from datetime import date
 from django.test import TestCase
 
-from clients.models import Address
+from clients.models import Address, Client
 
 
 class AddressModelTest(TestCase):
@@ -54,5 +55,81 @@ class AddressModelTest(TestCase):
         self.assertEquals(str(verbose_name), "endereço")
 
     def test_verbose_name_plural(self):
-        verbose_name = Address._meta.verbose_name_plural
-        self.assertEquals(str(verbose_name), "endereços")
+        verbose_name_plural = Address._meta.verbose_name_plural
+        self.assertEquals(str(verbose_name_plural), "endereços")
+
+
+class ClientModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        """"Set up non-modified object used by all test methods"""
+        address = Address.objects.create(
+            street="Rua Altos",
+            city="Teresina",
+            state="PI",
+        )
+        Client.objects.create(
+            name="José Augusto",
+            email="jose@mail.com",
+            address=address,
+            cpf="123.456.789-12",
+            birth_date=date(1990, 1, 1),
+            occupation="Pessoa Desenvolvedora",
+        )
+
+    def test_name_label(self):
+        client = Client.objects.get(pk=1)
+        name_label = client._meta.get_field("name").verbose_name
+        self.assertEquals(name_label, "Nome")
+
+    def test_name_max_length(self):
+        client = Client.objects.get(pk=1)
+        max_length = client._meta.get_field("name").max_length
+        self.assertEquals(max_length, 100)
+
+    def test_email_label(self):
+        client = Client.objects.get(pk=1)
+        email_label = client._meta.get_field("email").verbose_name
+        self.assertEquals(email_label, "Email")
+
+    def test_address_label(self):
+        client = Client.objects.get(pk=1)
+        address_label = client._meta.get_field("address").verbose_name
+        self.assertEquals(address_label, "Endereço")
+
+    def test_cpf_label(self):
+        client = Client.objects.get(pk=1)
+        cpf_label = client._meta.get_field("cpf").verbose_name
+        self.assertEquals(cpf_label, "CPF")
+
+    def test_cpf_max_length(self):
+        client = Client.objects.get(pk=1)
+        max_length = client._meta.get_field("cpf").max_length
+        self.assertEquals(max_length, 14)
+
+    def test_birth_date_label(self):
+        client = Client.objects.get(pk=1)
+        birth_date_label = client._meta.get_field("birth_date").verbose_name
+        self.assertEquals(birth_date_label, "Data de Nascimento")
+
+    def test_occupation_label(self):
+        client = Client.objects.get(pk=1)
+        occupation_label = client._meta.get_field("occupation").verbose_name
+        self.assertEquals(occupation_label, "Profissão")
+
+    def test_occupation_max_length(self):
+        client = Client.objects.get(pk=1)
+        max_length = client._meta.get_field("occupation").max_length
+        self.assertEquals(max_length, 25)
+
+    def test_string_representation(self):
+        client = Client.objects.get(pk=1)
+        self.assertEquals(str(client), client.name)
+
+    def test_verbose_name(self):
+        verbose_name = Client._meta.verbose_name
+        self.assertEquals(str(verbose_name), "cliente")
+
+    def test_verbose_name_plural(self):
+        verbose_name_plural = Client._meta.verbose_name_plural
+        self.assertEquals(str(verbose_name_plural), "clientes")
