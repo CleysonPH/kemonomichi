@@ -43,7 +43,7 @@ DJANGO_APPS = [
 
 THIRD_APPS = []
 
-MY_APPS = []
+MY_APPS = ["clients.apps.ClientsConfig"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + MY_APPS
 
