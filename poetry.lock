@@ -73,6 +73,17 @@ argon2 = ["argon2-cffi (>=16.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+category = "main"
+description = "Country-specific Django helpers for Brazil."
+name = "django-localflavor-br"
+optional = false
+python-versions = "*"
+version = "1.0"
+
+[package.dependencies]
+Django = ">=1.4"
+
+[[package]]
 category = "dev"
 description = "Experimental type system extensions for programs checked with the mypy typechecker."
 name = "mypy-extensions"
@@ -145,7 +156,7 @@ python-versions = "*"
 version = "3.7.4.3"
 
 [metadata]
-content-hash = "5d2344164628b5a7bb81e2c3f5d3eafbfdd2d4fff04f681769b693caa3759e14"
+content-hash = "fc9f7fb9175bda5d3cb72a57f9322c87ae8e593e77b62e22d12b1b053eea5406"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -173,6 +184,9 @@ dj-database-url = [
 django = [
     {file = "Django-3.1.1-py3-none-any.whl", hash = "sha256:b5fbb818e751f660fa2d576d9f40c34a4c615c8b48dd383f5216e609f383371f"},
     {file = "Django-3.1.1.tar.gz", hash = "sha256:59c8125ca873ed3bdae9c12b146fbbd6ed8d0f743e4cf5f5817af50c51f1fc2f"},
+]
+django-localflavor-br = [
+    {file = "django-localflavor-br-1.0.tar.gz", hash = "sha256:d1ab2f63fd891822b500dbe8b59b6f297d73245e6b00d49847b21306d585e66a"},
 ]
 mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
