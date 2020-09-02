@@ -96,6 +96,17 @@ Django = ">=1.4"
 
 [[package]]
 category = "dev"
+description = "Smart object creation facility for Django."
+name = "model-mommy"
+optional = false
+python-versions = "*"
+version = "2.0.0"
+
+[package.dependencies]
+django = ">=1.11.0"
+
+[[package]]
+category = "dev"
 description = "Experimental type system extensions for programs checked with the mypy typechecker."
 name = "mypy-extensions"
 optional = false
@@ -167,7 +178,7 @@ python-versions = "*"
 version = "3.7.4.3"
 
 [metadata]
-content-hash = "a6ddb0a09dc1474298933b08815bb8eaa76f249f6d51e7fd1e604921f8fe0687"
+content-hash = "f9d6d0e3ebf247cccee989c21951656330c6063bf91ef892e2d4d253e250b580"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -202,6 +213,10 @@ django-adminlte2 = [
 ]
 django-localflavor-br = [
     {file = "django-localflavor-br-1.0.tar.gz", hash = "sha256:d1ab2f63fd891822b500dbe8b59b6f297d73245e6b00d49847b21306d585e66a"},
+]
+model-mommy = [
+    {file = "model_mommy-2.0.0-py2.py3-none-any.whl", hash = "sha256:40d6e740aad7509e696a324b94cf2b0a104da93c3d4a7924cea1be3d0eb95b4f"},
+    {file = "model_mommy-2.0.0.tar.gz", hash = "sha256:3d332afce941c57f1990f45b083ba13252ba74fcd1ae43fd047e5af7a70fb312"},
 ]
 mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},

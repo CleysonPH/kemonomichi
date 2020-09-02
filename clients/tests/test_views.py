@@ -1,0 +1,26 @@
+from django.test import TestCase
+from django.urls import reverse
+
+from model_mommy import mommy
+
+
+class ClientListViewTest(TestCase):
+    def test_view_url_exists_at_desired_location(self):
+        response = self.client.get("/clientes/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        repsonse = self.client.get(reverse("clients:client-list"))
+        self.assertEqual(repsonse.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse("clients:client-list"))
+        self.assertTemplateUsed(response, "clients/client_list.html")
+
+    def test_list_all_clients(self):
+        clients = mommy.make("clients.Client", 10)
+        response = self.client.get(reverse("clients:client-list"))
+        self.assertEqual(len(response.context["clients"]), 10)
+
+        for client in clients:
+            self.assertTrue(client in response.context["clients"])
