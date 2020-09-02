@@ -10,6 +10,7 @@ class ClientForm(forms.ModelForm):
         exclude = ["address"]
         widgets = {
             "birth_date": DateInput(
+                format="%Y-%m-%d",
                 attrs={"type": "date"},
             ),
         }
