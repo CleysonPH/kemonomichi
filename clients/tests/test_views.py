@@ -1,7 +1,10 @@
+from datetime import date
+
 from django.test import TestCase
 from django.urls import reverse
-
 from model_mommy import mommy
+
+from clients.models import Client
 
 
 class ClientListViewTest(TestCase):
@@ -65,3 +68,61 @@ class ClientDetailViewTest(TestCase):
         )
         self.assertIn("client", response.context)
         self.assertEqual(response.context["client"], self.client_data)
+
+
+class ClientCreateViewTest(TestCase):
+    def test_view_url_exists_at_desired_location(self):
+        response = self.client.get("/clientes/cadastrar/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        response = self.client.get(reverse("clients:client-create"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse("clients:client-create"))
+        self.assertTemplateUsed(response, "clients/client_form.html")
+
+    def test_page_title(self):
+        response = self.client.get(reverse("clients:client-create"))
+        self.assertIn("title", response.context)
+        self.assertEqual(response.context["title"], "Cadastrar Cliente")
+
+    def test_redirects_to_client_detail_after_submit_form_with_success(self):
+        response = self.client.post(
+            reverse("clients:client-create"),
+            {
+                "name": "Luis da Silva",
+                "email": "luis@mail.com",
+                "cpf": "592.362.030-86",
+                "birth_date": date(1990, 12, 30),
+                "occupation": "Programador",
+                "street": "Rua 10",
+                "city": "São Paulo",
+                "state": "SP",
+            },
+        )
+
+        self.assertRedirects(response, reverse("clients:client-detail", args=[1]))
+
+    def test_create_client_in_database_after_submit_form_with_success(self):
+        response = self.client.post(
+            reverse("clients:client-create"),
+            {
+                "name": "Algusto da Silva",
+                "email": "algusto@mail.com",
+                "cpf": "592.362.030-86",
+                "birth_date": date(1990, 12, 30),
+                "occupation": "Programador",
+                "street": "Rua 10",
+                "city": "São Paulo",
+                "state": "SP",
+            },
+        )
+
+        client = Client.objects.get(name="Algusto da Silva")
+
+        self.assertRedirects(
+            response, reverse("clients:client-detail", args=[client.pk])
+        )
+        self.assertTrue(client)

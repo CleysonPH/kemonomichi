@@ -18,9 +18,9 @@ def client_create(request):
             client.address = address
             client.save()
 
-            return redirect("clients:client-list")
+            return redirect(client.get_absolute_url())
     context = {
-        "title": "Cadastro de Clientes",
+        "title": "Cadastrar Cliente",
         "client_form": client_form,
         "address_form": address_form,
     }
