@@ -7,21 +7,63 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Address',
+            name="Address",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('street', models.CharField(max_length=50, verbose_name='Rua')),
-                ('city', models.CharField(max_length=30, verbose_name='Cidade')),
-                ('state', models.CharField(choices=[('AC', 'Acre'), ('AL', 'Alagoas'), ('AP', 'Amapá'), ('AM', 'Amazonas'), ('BA', 'Bahia'), ('CE', 'Ceará'), ('DF', 'Distrito Federal'), ('ES', 'Espírito Santo'), ('GO', 'Goiás'), ('MA', 'Maranhão'), ('MT', 'Mato Grosso'), ('MS', 'Mato Grosso do Sul'), ('MG', 'Minas Gerais'), ('PA', 'Pará'), ('PB', 'Paraíba'), ('PR', 'Paraná'), ('PE', 'Pernambuco'), ('PI', 'Piauí'), ('RJ', 'Rio de Janeiro'), ('RN', 'Rio Grande do Norte'), ('RS', 'Rio Grande do Sul'), ('RO', 'Rondônia'), ('RR', 'Roraima'), ('SC', 'Santa Catarina'), ('SP', 'São Paulo'), ('SE', 'Sergipe'), ('TO', 'Tocantins')], max_length=2, verbose_name='Estado')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("street", models.CharField(max_length=50, verbose_name="Rua")),
+                ("city", models.CharField(max_length=30, verbose_name="Cidade")),
+                (
+                    "state",
+                    models.CharField(
+                        choices=[
+                            ("AC", "Acre"),
+                            ("AL", "Alagoas"),
+                            ("AP", "Amapá"),
+                            ("AM", "Amazonas"),
+                            ("BA", "Bahia"),
+                            ("CE", "Ceará"),
+                            ("DF", "Distrito Federal"),
+                            ("ES", "Espírito Santo"),
+                            ("GO", "Goiás"),
+                            ("MA", "Maranhão"),
+                            ("MT", "Mato Grosso"),
+                            ("MS", "Mato Grosso do Sul"),
+                            ("MG", "Minas Gerais"),
+                            ("PA", "Pará"),
+                            ("PB", "Paraíba"),
+                            ("PR", "Paraná"),
+                            ("PE", "Pernambuco"),
+                            ("PI", "Piauí"),
+                            ("RJ", "Rio de Janeiro"),
+                            ("RN", "Rio Grande do Norte"),
+                            ("RS", "Rio Grande do Sul"),
+                            ("RO", "Rondônia"),
+                            ("RR", "Roraima"),
+                            ("SC", "Santa Catarina"),
+                            ("SP", "São Paulo"),
+                            ("SE", "Sergipe"),
+                            ("TO", "Tocantins"),
+                        ],
+                        max_length=2,
+                        verbose_name="Estado",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'endereço',
-                'verbose_name_plural': 'endereços',
+                "verbose_name": "endereço",
+                "verbose_name_plural": "endereços",
             },
         ),
     ]

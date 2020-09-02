@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h1 class="box-title">
+        {{ title }}
+      </h1>
+    </div>
+
+    <div class="box-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Data de Nascimento</th>
+            <th>Profissão</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for client in clients %}
+            <tr>
+              <td>
+                <a href="{{ client.get_absolute_url }}">{{ client.name }}</a>
+              </td>
+              <td>{{ client.birth_date }}</td>
+              <td>{{ client.occupation }}</td>
+              <td>
+                <a href="">Editar</a>
+                <a href="">Deletar</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <hr>
+      <a class="btn btn-primary" href="{% url 'clients:client-create' %}">Cadastrar</a>
+    </div>
+  </div>
+{% endblock content %}

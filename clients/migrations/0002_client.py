@@ -7,24 +7,42 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('clients', '0001_initial'),
+        ("clients", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Client',
+            name="Client",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, verbose_name='Nome')),
-                ('email', models.EmailField(max_length=254, verbose_name='Email')),
-                ('cpf', models.CharField(max_length=14, verbose_name='CPF')),
-                ('birth_date', models.DateField(verbose_name='Data de Nascimento')),
-                ('occupation', models.CharField(max_length=25, verbose_name='Profissão')),
-                ('address', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='clients.address', verbose_name='Endereço')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100, verbose_name="Nome")),
+                ("email", models.EmailField(max_length=254, verbose_name="Email")),
+                ("cpf", models.CharField(max_length=14, verbose_name="CPF")),
+                ("birth_date", models.DateField(verbose_name="Data de Nascimento")),
+                (
+                    "occupation",
+                    models.CharField(max_length=25, verbose_name="Profissão"),
+                ),
+                (
+                    "address",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="clients.address",
+                        verbose_name="Endereço",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'cliente',
-                'verbose_name_plural': 'clientes',
+                "verbose_name": "cliente",
+                "verbose_name_plural": "clientes",
             },
         ),
     ]
