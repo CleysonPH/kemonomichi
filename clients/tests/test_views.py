@@ -222,3 +222,55 @@ class ClientUpdateViewTest(TestCase):
         self.assertEqual(client_data["street"], client.address.street)
         self.assertEqual(client_data["city"], client.address.city)
         self.assertEqual(client_data["state"], client.address.state)
+
+
+class ClientDeleteViewTest(TestCase):
+    def setUp(self):
+        """"Set up non-modified object used by all test methods"""
+        self.client_data = mommy.make("clients.Client")
+
+    def test_view_url_exists_at_desired_location(self):
+        response = self.client.get("/clientes/1/remover/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        response = self.client.get(
+            reverse("clients:client-delete", args=[self.client_data.pk])
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(
+            reverse("clients:client-delete", args=[self.client_data.pk])
+        )
+        self.assertTemplateUsed(response, "clients/client_delete_confirm.html")
+
+    def test_page_title(self):
+        response = self.client.get(
+            reverse("clients:client-delete", args=[self.client_data.pk])
+        )
+        self.assertIn("title", response.context)
+        self.assertEqual(response.context["title"], "Remover Cliente")
+
+    def test_show_correct_client(self):
+        response = self.client.get(
+            reverse("clients:client-delete", args=[self.client_data.pk])
+        )
+        self.assertIn("client", response.context)
+        self.assertEqual(response.context["client"], self.client_data)
+
+    def test_redirects_to_client_list_after_submit_form_with_success(self):
+        response = self.client.post(
+            reverse("clients:client-delete", args=[self.client_data.pk])
+        )
+
+        self.assertRedirects(response, reverse("clients:client-list"))
+
+    def test_delete_client_in_database_after_submit_form_with_success(self):
+        response = self.client.post(
+            reverse("clients:client-delete", args=[self.client_data.pk]),
+        )
+
+        self.assertRedirects(response, reverse("clients:client-list"))
+        with self.assertRaises(Client.DoesNotExist):
+            Client.objects.get(pk=1)
