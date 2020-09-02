@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load filters %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h1>{{ title }}</h1>
+    </div>
+
+    <div class="box-body">
+      <form method="POST">
+        {% csrf_token %}
+
+        {% for field in client_form %}
+          <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field|add_class:"form-control" }}
+          </div>
+        {% endfor %}
+
+        <hr>
+        <h4>Endereço</h4>
+        {% for field in address_form %}
+          <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field|add_class:"form-control" }}
+          </div>
+        {% endfor %}
+
+        <input class="btn btn-primary" type="submit" value="Salvar">
+      </form>
+    </div>
+  </div>
+
+{% endblock content %}

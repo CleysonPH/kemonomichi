@@ -41,9 +41,12 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_APPS = []
+THIRD_APPS = ["django_adminlte"]
 
-MY_APPS = ["clients.apps.ClientsConfig"]
+MY_APPS = [
+    "core.apps.CoreConfig",
+    "clients.apps.ClientsConfig",
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + MY_APPS
 

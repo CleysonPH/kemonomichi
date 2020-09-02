@@ -10,6 +10,7 @@ django = "^3.1.1"
 python-decouple = "^3.3"
 dj-database-url = "^0.5.0"
 django-localflavor-br = "^1.0"
+django-adminlte2 = "^0.4.3"
 
 [tool.poetry.dev-dependencies]
 black = "^20.8b1"
