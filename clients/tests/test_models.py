@@ -1,5 +1,7 @@
 from datetime import date
+
 from django.test import TestCase
+from django.urls import reverse
 
 from clients.models import Address, Client
 
@@ -133,3 +135,10 @@ class ClientModelTest(TestCase):
     def test_verbose_name_plural(self):
         verbose_name_plural = Client._meta.verbose_name_plural
         self.assertEquals(str(verbose_name_plural), "clientes")
+
+    def test_get_absolute_url(self):
+        client = Client.objects.get(pk=1)
+        self.assertEqual(
+            client.get_absolute_url(),
+            reverse("clients:client-detail", args=[client.pk]),
+        )
