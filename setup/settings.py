@@ -46,6 +46,7 @@ THIRD_APPS = ["django_adminlte"]
 MY_APPS = [
     "core.apps.CoreConfig",
     "clients.apps.ClientsConfig",
+    "pets.apps.PetsConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + MY_APPS
