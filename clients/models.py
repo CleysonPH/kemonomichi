@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django_localflavor_br.br_states import STATE_CHOICES
 
 
@@ -33,3 +34,6 @@ class Client(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("clients:client-detail", kwargs={"pk": self.pk})

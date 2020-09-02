@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
+from .models import Client
 from .forms import ClientForm, AddressForm
 
 
@@ -24,3 +25,14 @@ def client_create(request):
     }
 
     return render(request, "clients/client_form.html", context)
+
+
+def client_detail(request, pk):
+    client = get_object_or_404(Client, pk=pk)
+
+    context = {
+        "title": "Detalhes do Cliente",
+        "client": client,
+    }
+
+    return render(request, "clients/client_detail.html", context)
