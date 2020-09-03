@@ -37,15 +37,19 @@
         <!-- /.box-header -->
         <div class="box-body">
         {% for pet in client.pet_set.all %}
-            <a href="{{ pet.get_absolute_url }}">
-              <strong><i class="fa fa-paw margin-r-5"></i> {{ pet.name }}</strong>
-            </a>
+          <a href="{{ pet.get_absolute_url }}">
+            <strong><i class="fa fa-paw margin-r-5"></i> {{ pet.name }}</strong>
+          </a>
 
-            <p class="text-muted">
-              {{ pet.get_specie_display }} - {{ pet.get_color_display }}
-            </p>
+          <p class="text-muted">
+            {{ pet.get_specie_display }} - {{ pet.get_color_display }}
+          </p>
 
-            <hr>
+          <hr>
+        {% empty %}
+          <p class="text-muted">
+            Nenhum pet cadastrado
+          </p>
         {% endfor %}
           <a href="{% url 'pets:pet-create' owner_pk=client.pk %}" class="btn btn-primary btn-block">Cadastrar Pet</a>
         </div>
