@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 
 from clients.models import Client
 from .forms import PetForm
+from .models import Pet
 
 
 def pet_create(request, owner_pk):
@@ -27,4 +27,11 @@ def pet_create(request, owner_pk):
 
 
 def pet_detail(request, pk):
-    return HttpResponse("TODO")
+    pet = get_object_or_404(Pet, pk=pk)
+
+    context = {
+        "title": "Detalhes do Pet",
+        "pet": pet,
+    }
+
+    return render(request, "pets/pet_detail.html", context)

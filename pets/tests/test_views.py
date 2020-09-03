@@ -59,3 +59,30 @@ class PetCreateViewTest(TestCase):
         self.assertEqual(pet_data["birth_date"], pet.birth_date)
         self.assertEqual(pet_data["specie"], pet.specie)
         self.assertEqual(pet_data["color"], pet.color)
+
+
+class PetDetailViewTest(TestCase):
+    def setUp(self):
+        self.pet = mommy.make(Pet)
+
+    def test_view_url_exists_at_desired_location(self):
+        response = self.client.get(f"/pets/{self.pet.pk}/detalhes/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        response = self.client.get(reverse("pets:pet-detail", args=[self.pet.pk]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(reverse("pets:pet-detail", args=[self.pet.pk]))
+        self.assertTemplateUsed(response, "pets/pet_detail.html")
+
+    def test_page_title(self):
+        response = self.client.get(reverse("pets:pet-detail", args=[self.pet.pk]))
+        self.assertIn("title", response.context)
+        self.assertEqual(response.context["title"], "Detalhes do Pet")
+
+    def test_show_correct_pet(self):
+        response = self.client.get(reverse("pets:pet-detail", args=[self.pet.pk]))
+        self.assertIn("pet", response.context)
+        self.assertEqual(response.context["pet"], self.pet)
