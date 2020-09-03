@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.urls import reverse
 from model_mommy import mommy
 
 from pets.models import Pet
@@ -48,3 +49,9 @@ class PetModelTest(TestCase):
     def test_verbose_name_plural(self):
         verbose_name_plural = Pet._meta.verbose_name_plural
         self.assertEquals(str(verbose_name_plural), "pets")
+
+    def test_absolute_url(self):
+        pet = mommy.make(Pet)
+        self.assertEqual(
+            pet.get_absolute_url(), reverse("pets:pet-detail", args=[pet.pk])
+        )

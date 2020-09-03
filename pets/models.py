@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Pet(models.Model):
@@ -37,3 +38,6 @@ class Pet(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("pets:pet-detail", args=[self.pk])
