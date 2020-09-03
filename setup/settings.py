@@ -48,6 +48,7 @@ MY_APPS = [
     "clients.apps.ClientsConfig",
     "pets.apps.PetsConfig",
     "appointments.apps.AppointmentsConfig",
+    "employees.apps.EmployeesConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + MY_APPS + THIRD_APPS
@@ -110,6 +111,8 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+AUTH_USER_MODEL = "employees.Employee"
 
 
 # Internationalization
