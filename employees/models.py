@@ -31,7 +31,7 @@ class EmployeeManager(BaseUserManager):
     def create_superuser(self, username, email=None, password=None, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
-        extra_fields.setdefault("role", 4)
+        extra_fields.setdefault("role", 1)
 
         if extra_fields.get("is_staff") is not True:
             raise ValueError("Superuser must have is_staff=True.")
@@ -43,10 +43,10 @@ class EmployeeManager(BaseUserManager):
 
 class Employee(AbstractBaseUser, PermissionsMixin):
     ROLE_CHOICES = (
-        (1, "Veterinario"),
-        (2, "Financeiro"),
-        (3, "Atendimento"),
-        (4, "Administrador"),
+        (1, "Administrador"),
+        (2, "Veterinario"),
+        (3, "Financeiro"),
+        (4, "Atendimento"),
     )
 
     username_validator = UnicodeUsernameValidator()

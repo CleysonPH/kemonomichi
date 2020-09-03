@@ -1,10 +1,13 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import Client
-from .forms import ClientForm, AddressForm
 from appointments.models import Appointment
 
+from .forms import AddressForm, ClientForm
+from .models import Client
 
+
+@login_required
 def client_create(request):
     client_form = ClientForm()
     address_form = AddressForm()
@@ -29,6 +32,7 @@ def client_create(request):
     return render(request, "clients/client_form.html", context)
 
 
+@login_required
 def client_detail(request, pk):
     client = get_object_or_404(Client, pk=pk)
     appointments = Appointment.objects.filter(pet__owner_id=pk).all().order_by("-date")
@@ -42,6 +46,7 @@ def client_detail(request, pk):
     return render(request, "clients/client_detail.html", context)
 
 
+@login_required
 def client_list(request):
     clients = Client.objects.all()
 
@@ -53,6 +58,7 @@ def client_list(request):
     return render(request, "clients/client_list.html", context)
 
 
+@login_required
 def client_update(request, pk):
     client = get_object_or_404(Client, pk=pk)
     client_form = ClientForm(instance=client)
@@ -76,6 +82,7 @@ def client_update(request, pk):
     return render(request, "clients/client_form.html", context)
 
 
+@login_required
 def client_delete(request, pk):
     client = get_object_or_404(Client, pk=pk)
 

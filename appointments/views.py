@@ -1,11 +1,13 @@
-from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from pets.models import Pet
 from .forms import AppointmentForm
 from .models import Appointment
 
 
+@user_passes_test(lambda user: user.role in [1, 2])
 def appointment_create(request, pet_pk):
     pet = get_object_or_404(Pet, pk=pet_pk)
     appointment_form = AppointmentForm()
@@ -27,6 +29,7 @@ def appointment_create(request, pet_pk):
     return render(request, "appointments/appointment_form.html", context)
 
 
+@login_required
 def appointment_detail(request, pk):
     appointment = get_object_or_404(Appointment, pk=pk)
 

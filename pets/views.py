@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 from clients.models import Client
 from .forms import PetForm
 from .models import Pet
 
 
+@login_required
 def pet_create(request, owner_pk):
     owner = get_object_or_404(Client, pk=owner_pk)
     pet_form = PetForm()
@@ -26,6 +28,7 @@ def pet_create(request, owner_pk):
     return render(request, "pets/pet_form.html", context)
 
 
+@login_required
 def pet_detail(request, pk):
     pet = get_object_or_404(Pet, pk=pk)
 

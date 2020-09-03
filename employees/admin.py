@@ -6,7 +6,6 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm,
     UserChangeForm,
-    UserCreationForm,
 )
 from django.core.exceptions import PermissionDenied
 from django.db import router, transaction
@@ -21,6 +20,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 
 from .models import Employee
+from .forms import EmployeeCreationForm
 
 
 csrf_protect_m = method_decorator(csrf_protect)
@@ -59,9 +59,13 @@ class EmployeeAdmin(admin.ModelAdmin):
                 "fields": ("username", "password1", "password2"),
             },
         ),
+        (
+            _("Personal info"),
+            {"fields": ("first_name", "last_name", "email", "birth_date", "role")},
+        ),
     )
     form = UserChangeForm
-    add_form = UserCreationForm
+    add_form = EmployeeCreationForm
     change_password_form = AdminPasswordChangeForm
     list_display = ("username", "email", "first_name", "last_name", "role", "is_staff")
     list_filter = ("role", "is_staff", "is_superuser", "is_active", "groups")
