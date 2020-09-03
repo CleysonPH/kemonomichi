@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h1 class="box-title">
+        {{ title }}
+      </h1>
+    </div>
+
+    <div class="box-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Usuário</th>
+            <th>Nome completo</th>
+            <th>Email</th>
+            <th>Cargo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for employee in employees %}
+            <tr>
+              <td>
+                <a href="">{{ employee.username }}</a>
+              </td>
+              <td>{{ employee.get_full_name }}</td>
+              <td>{{ employee.email }}</td>
+              <td>{{ employee.get_role_display }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock content %}

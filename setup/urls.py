@@ -5,5 +5,6 @@ urlpatterns = [
     path("clientes/", include("clients.urls", namespace="clients")),
     path("pets/", include("pets.urls", namespace="pets")),
     path("consultas/", include("appointments.urls", namespace="appointments")),
+    path("funcionarios/", include("employees.urls", namespace="employees")),
     path("admin/", admin.site.urls),
 ]
