@@ -49,6 +49,7 @@ MY_APPS = [
     "pets.apps.PetsConfig",
     "appointments.apps.AppointmentsConfig",
     "employees.apps.EmployeesConfig",
+    "auth.apps.AuthConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + MY_APPS + THIRD_APPS
