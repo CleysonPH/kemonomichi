@@ -47,6 +47,7 @@ MY_APPS = [
     "core.apps.CoreConfig",
     "clients.apps.ClientsConfig",
     "pets.apps.PetsConfig",
+    "appointments.apps.AppointmentsConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + MY_APPS
