@@ -1,0 +1,26 @@
+{% extends 'adminlte/lib/_main_sidebar.html' %}
+
+{% block nav_links %}
+  <li class="treeview">
+    <a href="#">
+      <i class="fa fa-user"></i>
+      <span>Clientes</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+    </a>
+
+    <ul class="treeview-menu">
+      <li>
+        <a href="{% url 'clients:client-list' %}">
+          <i class="fa fa-list"></i> Listar
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'clients:client-create' %}">
+          <i class="fa fa-plus"></i> Cadastrar
+        </a>
+      </li>
+    </ul>
+  </li>
+{% endblock nav_links %}

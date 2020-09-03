@@ -50,7 +50,7 @@ MY_APPS = [
     "appointments.apps.AppointmentsConfig",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + MY_APPS
+INSTALLED_APPS = DJANGO_APPS + MY_APPS + THIRD_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
