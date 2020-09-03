@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load filters %}
+
+{% block title %}
+  {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <section class="invoice">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2 class="page-header">
+          <i class="fa fa-globe"></i> Consulta
+          <small class="pull-right">Data: {{ appointment.date }}</small>
+        </h2>
+      </div>
+    </div>
+
+    <div class="row invoice-info">
+      <div class="col-sm-4 invoice-col">
+        <strong>Consulta</strong>
+        <br>
+        <strong>Data:</strong> {{ appointment.date }} <br>
+        <strong>Motivo:</strong> {{ appointment.reason }} <br>
+      </div>
+      <div class="col-sm-4 invoice-col">
+        <strong>Pet</strong>
+        <br>
+        <strong>Nome:</strong> {{ appointment.pet.name }} <br>
+        <strong>Data de Nascimento:</strong> {{ appointment.pet.birth_date }} <br>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <strong>Dados da Consulta</strong>
+        <br>
+        <strong>Data:</strong> {{ appointment.date }} <br>
+        <strong>Motivo:</strong> {{ appointment.reason }} <br>
+        <strong>Peso Atual:</strong> {{ appointment.current_weight }} <br>
+        <strong>Medicamentos Prescritos:</strong> {{ appointment.prescribed_drugs }} <br>
+        <strong>Exames Prescritos:</strong> {{ appointment.prescribed_exams }} <br>
+      </div>
+    </div>
+
+    <div class="row no-print">
+      <div class="col-sm-12">
+        <button type="button" class="btn btn-primary pull-right" onclick="window.print()">
+          <i class="fa fa-print"></i> Imprimir
+        </button>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

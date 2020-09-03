@@ -3,6 +3,7 @@ from django.http import HttpResponse
 
 from pets.models import Pet
 from .forms import AppointmentForm
+from .models import Appointment
 
 
 def appointment_create(request, pet_pk):
@@ -27,4 +28,11 @@ def appointment_create(request, pet_pk):
 
 
 def appointment_detail(request, pk):
-    return HttpResponse("TODO")
+    appointment = get_object_or_404(Appointment, pk=pk)
+
+    context = {
+        "title": "Detalhes da Consulta",
+        "appointment": appointment,
+    }
+
+    return render(request, "appointments/appointment_detail.html", context)

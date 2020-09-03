@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.urls import reverse
 from model_mommy import mommy
 
 from appointments.models import Appointment
@@ -55,4 +56,11 @@ class AppointmentModelTest(TestCase):
         appointment = mommy.make(Appointment)
         self.assertEqual(
             str(appointment), f"{appointment.pet.name} - {appointment.date}"
+        )
+
+    def test_get_absolute_url(self):
+        appointment = mommy.make(Appointment)
+        self.assertEqual(
+            appointment.get_absolute_url(),
+            reverse("appointments:appointment-detail", kwargs={"pk": appointment.pk}),
         )

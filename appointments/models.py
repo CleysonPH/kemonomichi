@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Appointment(models.Model):
@@ -26,3 +27,6 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f"{self.pet.name} - {self.date}"
+
+    def get_absolute_url(self):
+        return reverse("appointments:appointment-detail", kwargs={"pk": self.pk})

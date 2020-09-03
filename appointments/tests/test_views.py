@@ -70,3 +70,38 @@ class AppointmentCreateViewTest(TestCase):
         self.assertEqual(
             appointment_data["prescribed_exams"], appointment.prescribed_exams
         )
+
+
+class AppointmentDetailViewTest(TestCase):
+    def setUp(self):
+        self.appointment = mommy.make("appointments.Appointment")
+
+    def test_view_url_exists_at_desired_location(self):
+        response = self.client.get(f"/consultas/{self.appointment.pk}/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        response = self.client.get(
+            reverse("appointments:appointment-detail", args=[self.appointment.pk])
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        response = self.client.get(
+            reverse("appointments:appointment-detail", args=[self.appointment.pk])
+        )
+        self.assertTemplateUsed(response, "appointments/appointment_detail.html")
+
+    def test_page_title(self):
+        response = self.client.get(
+            reverse("appointments:appointment-detail", args=[self.appointment.pk])
+        )
+        self.assertIn("title", response.context)
+        self.assertEqual(response.context["title"], "Detalhes da Consulta")
+
+    def test_show_correct_appointment(self):
+        response = self.client.get(
+            reverse("appointments:appointment-detail", args=[self.appointment.pk])
+        )
+        self.assertIn("appointment", response.context)
+        self.assertEqual(response.context["appointment"], self.appointment)

@@ -92,6 +92,12 @@
                     <div class="timeline-body">
                         {{ appointment.reason }}
                     </div>
+
+                    <div class="timeline-footer">
+                      <a href="{{ appointment.get_absolute_url }}" class="btn btn-primary btn-xs">
+                        Visualizar consulta
+                      </a>
+                    </div>
                   </div>
                 </li>
               {% endfor %}
