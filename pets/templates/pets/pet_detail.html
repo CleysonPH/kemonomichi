@@ -52,8 +52,8 @@
                     </span>
               </li>
               <!-- /.timeline-label -->
-              <!-- timeline item -->
               {% for appointment in pet.appointment_set.all %}
+                <!-- timeline item -->
                 <li>
                   <i class="fa fa-paw bg-blue"></i>
 
@@ -62,9 +62,13 @@
                       <i class="fa fa-calendar"></i> {{ appointment.date }}
                     </span>
 
-                    <h3 class="timeline-header no-border">
+                    <h3 class="timeline-header">
                       {{ appointment.pet.name }} realizou uma nova consulta
                     </h3>
+
+                    <div class="timeline-body">
+                        {{ appointment.reason }}
+                    </div>
                   </div>
                 </li>
               {% endfor %}

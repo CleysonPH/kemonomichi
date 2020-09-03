@@ -75,18 +75,26 @@
                     </span>
               </li>
               <!-- /.timeline-label -->
-              <!-- timeline item -->
-              <li>
-                <i class="fa fa-user bg-aqua"></i>
+              {% for appointment in appointments %}
+                <!-- timeline item -->
+                <li>
+                  <i class="fa fa-paw bg-blue"></i>
 
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+                  <div class="timeline-item">
+                    <span class="time">
+                      <i class="fa fa-calendar"></i> {{ appointment.date }}
+                    </span>
 
-                  <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                  </h3>
-                </div>
-              </li>
-              <!-- END timeline item -->
+                    <h3 class="timeline-header">
+                      {{ appointment.pet.name }} realizou uma nova consulta
+                    </h3>
+
+                    <div class="timeline-body">
+                        {{ appointment.reason }}
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
               <li>
                 <i class="fa fa-clock-o bg-gray"></i>
               </li>

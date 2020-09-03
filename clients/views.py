@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import Client
 from .forms import ClientForm, AddressForm
+from appointments.models import Appointment
 
 
 def client_create(request):
@@ -30,10 +31,12 @@ def client_create(request):
 
 def client_detail(request, pk):
     client = get_object_or_404(Client, pk=pk)
+    appointments = Appointment.objects.filter(pet__owner_id=pk).all().order_by("-date")
 
     context = {
         "title": "Detalhes do Cliente",
         "client": client,
+        "appointments": appointments,
     }
 
     return render(request, "clients/client_detail.html", context)
