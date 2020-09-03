@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 from decouple import config, Csv
 from dj_database_url import parse as db_url
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,7 +50,7 @@ MY_APPS = [
     "pets.apps.PetsConfig",
     "appointments.apps.AppointmentsConfig",
     "employees.apps.EmployeesConfig",
-    "auth.apps.AuthConfig",
+    "accounts.apps.AccountsConfig",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + MY_APPS + THIRD_APPS
@@ -114,6 +115,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = "employees.Employee"
+
+LOGIN_URL = reverse_lazy("accounts:signin")
+
+LOGOUT_URL = reverse_lazy("accounts:signout")
 
 
 # Internationalization
