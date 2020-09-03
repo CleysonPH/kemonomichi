@@ -28,6 +28,7 @@
               <b>Cor</b> <a class="pull-right">{{ pet.get_color_display }}</a>
             </li>
           </ul>
+          <a href="{% url 'appointments:appointment-create' pet_pk=pet.pk %}" class="btn btn-primary btn-block">Cadastrar Consulta</a>
         </div>
         <!-- /.box-body -->
       </div>
@@ -52,16 +53,21 @@
               </li>
               <!-- /.timeline-label -->
               <!-- timeline item -->
-              <li>
-                <i class="fa fa-user bg-aqua"></i>
+              {% for appointment in pet.appointment_set.all %}
+                <li>
+                  <i class="fa fa-paw bg-blue"></i>
 
-                <div class="timeline-item">
-                  <span class="time"><i class="fa fa-clock-o"></i> 5 mins ago</span>
+                  <div class="timeline-item">
+                    <span class="time">
+                      <i class="fa fa-calendar"></i> {{ appointment.date }}
+                    </span>
 
-                  <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request
-                  </h3>
-                </div>
-              </li>
+                    <h3 class="timeline-header no-border">
+                      {{ appointment.pet.name }} realizou uma nova consulta
+                    </h3>
+                  </div>
+                </li>
+              {% endfor %}
               <!-- END timeline item -->
               <li>
                 <i class="fa fa-clock-o bg-gray"></i>

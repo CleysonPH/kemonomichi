@@ -16,9 +16,9 @@ class Appointment(models.Model):
     current_weight = models.FloatField("Peso Atual", null=False, blank=False)
     current_drugs = models.TextField("Medicamento Atual", null=False, blank=True)
     prescribed_drugs = models.TextField(
-        "Medicamentos Prescritos", null=False, blank=False
+        "Medicamentos Prescritos", null=False, blank=True
     )
-    prescribed_exams = models.TextField("Exames Prescritos", null=False, blank=False)
+    prescribed_exams = models.TextField("Exames Prescritos", null=False, blank=True)
 
     class Meta:
         verbose_name = "consulta"
