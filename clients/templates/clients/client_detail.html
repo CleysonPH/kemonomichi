@@ -36,11 +36,18 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-          <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
+        {% for pet in client.pet_set.all %}
+            <a href="{{ pet.get_absolute_url }}">
+              <strong><i class="fa fa-paw margin-r-5"></i> {{ pet.name }}</strong>
+            </a>
 
-          <p class="text-muted">
-            B.S. in Computer Science from the University of Tennessee at Knoxville
-          </p>
+            <p class="text-muted">
+              {{ pet.get_specie_display }} - {{ pet.get_color_display }}
+            </p>
+
+            <hr>
+        {% endfor %}
+          <a href="{% url 'pets:pet-create' owner_pk=client.pk %}" class="btn btn-primary btn-block">Cadastrar Pet</a>
         </div>
         <!-- /.box-body -->
       </div>

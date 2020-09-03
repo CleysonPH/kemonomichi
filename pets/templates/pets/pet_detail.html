@@ -18,29 +18,16 @@
 
           <ul class="list-group list-group-unbordered">
             <li class="list-group-item">
+              <b>Dono</b> 
+              <a class="pull-right" href="{{ pet.owner.get_absolute_url }}">{{ pet.owner.name}}</a>
+            </li>
+            <li class="list-group-item">
               <b>Data de Nascimento</b> <a class="pull-right">{{ pet.birth_date}}</a>
             </li>
             <li class="list-group-item">
-              <b>CPF</b> <a class="pull-right">{{ pet.get_color_display }}</a>
+              <b>Cor</b> <a class="pull-right">{{ pet.get_color_display }}</a>
             </li>
           </ul>
-        </div>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
-
-      <!-- About Me Box -->
-      <div class="box box-primary">
-        <div class="box-header with-border">
-          <h3 class="box-title">Pets</h3>
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <strong><i class="fa fa-book margin-r-5"></i> Education</strong>
-
-          <p class="text-muted">
-            B.S. in Computer Science from the University of Tennessee at Knoxville
-          </p>
         </div>
         <!-- /.box-body -->
       </div>
