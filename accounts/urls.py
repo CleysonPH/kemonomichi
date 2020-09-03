@@ -5,6 +5,6 @@ from .views import signin, signout
 
 app_name = "accounts"
 urlpatterns = [
-    path("login", signin, name="signin"),
-    path("logout", signout, name="signout"),
+    path("login/", signin, name="signin"),
+    path("logout/", signout, name="signout"),
 ]
