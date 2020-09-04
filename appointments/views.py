@@ -7,6 +7,7 @@ from .forms import AppointmentForm
 from .models import Appointment
 
 
+@login_required
 @user_passes_test(lambda user: user.role in [1, 2])
 def appointment_create(request, pet_pk):
     pet = get_object_or_404(Pet, pk=pet_pk)
