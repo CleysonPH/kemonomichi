@@ -15,6 +15,8 @@
   </div>
 {% endblock %}
 
+{% block nav_heading %}NAVEGAÇÃO PRINCIPAL{% endblock %}
+
 {% block nav_links %}
   <li class="treeview">
     <a href="#">
@@ -41,7 +43,7 @@
 
   <li>
     <a href="{% url 'employees:employee-list' %}">
-      <i class="fa fa-user"></i> Fucionários
+      <i class="fa fa-user"></i> <span>Fucionários</span>
     </a>
   </li>
 {% endblock nav_links %}

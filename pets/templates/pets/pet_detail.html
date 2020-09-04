@@ -18,10 +18,10 @@
               <a class="pull-right" href="{{ pet.owner.get_absolute_url }}">{{ pet.owner.name}}</a>
             </li>
             <li class="list-group-item">
-              <b>Data de Nascimento</b> <a class="pull-right">{{ pet.birth_date}}</a>
+              <b>Data de Nascimento</b> <span class="pull-right">{{ pet.birth_date}}</span>
             </li>
             <li class="list-group-item">
-              <b>Cor</b> <a class="pull-right">{{ pet.get_color_display }}</a>
+              <b>Cor</b> <span class="pull-right">{{ pet.get_color_display }}</span>
             </li>
           </ul>
           {% if request.user.role <= 2 %}
