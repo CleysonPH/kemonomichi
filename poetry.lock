@@ -147,10 +147,10 @@ version = "1.0.1"
 [[package]]
 category = "dev"
 description = "Smart object creation facility for Django."
-name = "model-mommy"
+name = "model-bakery"
 optional = false
 python-versions = "*"
-version = "2.0.0"
+version = "1.1.1"
 
 [package.dependencies]
 django = ">=1.11.0"
@@ -336,7 +336,7 @@ python-versions = "*"
 version = "3.7.4.3"
 
 [metadata]
-content-hash = "a39d7c478d1b1d2c458e6b31bff3668a8b067d5276cb9266498fc938d30f58e0"
+content-hash = "41d54c8961f36ef495abec9cce3784ad3ad9193620d5071f202465b0a9dd8ac6"
 lock-version = "1.0"
 python-versions = "^3.8"
 
@@ -424,9 +424,9 @@ iniconfig = [
     {file = "iniconfig-1.0.1-py3-none-any.whl", hash = "sha256:80cf40c597eb564e86346103f609d74efce0f6b4d4f30ec8ce9e2c26411ba437"},
     {file = "iniconfig-1.0.1.tar.gz", hash = "sha256:e5f92f89355a67de0595932a6c6c02ab4afddc6fcdc0bfc5becd0d60884d3f69"},
 ]
-model-mommy = [
-    {file = "model_mommy-2.0.0-py2.py3-none-any.whl", hash = "sha256:40d6e740aad7509e696a324b94cf2b0a104da93c3d4a7924cea1be3d0eb95b4f"},
-    {file = "model_mommy-2.0.0.tar.gz", hash = "sha256:3d332afce941c57f1990f45b083ba13252ba74fcd1ae43fd047e5af7a70fb312"},
+model-bakery = [
+    {file = "model_bakery-1.1.1-py2.py3-none-any.whl", hash = "sha256:320d9e78fad1605a08bfb93affae42ba027300e2e973a235e12b102f78e97f7d"},
+    {file = "model_bakery-1.1.1.tar.gz", hash = "sha256:e2f0522a4b7d3cc1b6f88e95ac87cefd9317516274bb126f54488f47fe3aaafd"},
 ]
 more-itertools = [
     {file = "more-itertools-8.5.0.tar.gz", hash = "sha256:6f83822ae94818eae2612063a5101a7311e68ae8002005b5e05f03fd74a86a20"},

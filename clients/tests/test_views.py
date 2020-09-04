@@ -2,7 +2,7 @@ from datetime import date
 
 from django.test import TestCase
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from clients.models import Client
 from employees.models import Employee
@@ -47,7 +47,7 @@ class ClientListViewTest(TestCase):
 
     def test_list_all_clients(self):
         self.client.login(**self.admin_credentials)
-        clients = mommy.make("clients.Client", 10)
+        clients = baker.make("clients.Client", 10)
         response = self.client.get(reverse("clients:client-list"))
         self.assertEqual(len(response.context["clients"]), 10)
 
@@ -75,7 +75,7 @@ class ClientDetailViewTest(TestCase):
             birth_date=date(1990, 1, 1),
             role=1,
         )
-        self.client_data = mommy.make("clients.Client")
+        self.client_data = baker.make("clients.Client")
 
     def test_view_url_exists_at_desired_location(self):
         self.client.login(**self.admin_credentials)
@@ -225,7 +225,7 @@ class ClientUpdateViewTest(TestCase):
             birth_date=date(1990, 1, 1),
             role=1,
         )
-        self.client_data = mommy.make("clients.Client")
+        self.client_data = baker.make("clients.Client")
 
     def test_view_url_exists_at_desired_location(self):
         self.client.login(**self.admin_credentials)
@@ -337,7 +337,7 @@ class ClientDeleteViewTest(TestCase):
             birth_date=date(1990, 1, 1),
             role=1,
         )
-        self.client_data = mommy.make("clients.Client")
+        self.client_data = baker.make("clients.Client")
 
     def test_view_url_exists_at_desired_location(self):
         self.client.login(**self.admin_credentials)

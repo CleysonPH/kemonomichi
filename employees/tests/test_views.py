@@ -1,7 +1,7 @@
 from datetime import date
 from django.test import TestCase
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from employees.models import Employee
 
@@ -45,7 +45,7 @@ class EmployeeListViewTest(TestCase):
 
     def test_list_all_clients(self):
         self.client.login(**self.admin_credentials)
-        employees = mommy.make("employees.Employee", 9)
+        employees = baker.make("employees.Employee", 9)
         response = self.client.get(reverse("employees:employee-list"))
         self.assertEqual(len(response.context["employees"]), 10)
 

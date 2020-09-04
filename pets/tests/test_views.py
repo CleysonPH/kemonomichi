@@ -2,7 +2,7 @@ from datetime import date
 
 from django.test import TestCase
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pets.models import Pet
 from employees.models import Employee
@@ -23,7 +23,7 @@ class PetCreateViewTest(TestCase):
             birth_date=date(1990, 1, 1),
             role=1,
         )
-        self.owner = mommy.make("clients.Client")
+        self.owner = baker.make("clients.Client")
 
     def test_view_url_exists_at_desired_location(self):
         self.client.login(**self.admin_credentials)
@@ -101,7 +101,7 @@ class PetDetailViewTest(TestCase):
             birth_date=date(1990, 1, 1),
             role=1,
         )
-        self.pet = mommy.make(Pet)
+        self.pet = baker.make(Pet)
 
     def test_view_url_exists_at_desired_location(self):
         self.client.login(**self.admin_credentials)

@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from appointments.models import Appointment
 
@@ -49,13 +49,13 @@ class AppointmentModelTest(TestCase):
         self.assertEqual(verbose_name_plural, "consultas")
 
     def test_string_representation(self):
-        appointment = mommy.make(Appointment)
+        appointment = baker.make(Appointment)
         self.assertEqual(
             str(appointment), f"{appointment.pet.name} - {appointment.created_date}"
         )
 
     def test_get_absolute_url(self):
-        appointment = mommy.make(Appointment)
+        appointment = baker.make(Appointment)
         self.assertEqual(
             appointment.get_absolute_url(),
             reverse("appointments:appointment-detail", kwargs={"pk": appointment.pk}),

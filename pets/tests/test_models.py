@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import reverse
-from model_mommy import mommy
+from model_bakery import baker
 
 from pets.models import Pet
 
@@ -39,7 +39,7 @@ class PetModelTest(TestCase):
         self.assertEqual(owner_label, "Dono")
 
     def test_string_representation(self):
-        pet = mommy.make(Pet)
+        pet = baker.make(Pet)
         self.assertEqual(str(pet), pet.name)
 
     def test_verbose_name(self):
@@ -51,7 +51,7 @@ class PetModelTest(TestCase):
         self.assertEqual(str(verbose_name_plural), "pets")
 
     def test_absolute_url(self):
-        pet = mommy.make(Pet)
+        pet = baker.make(Pet)
         self.assertEqual(
             pet.get_absolute_url(), reverse("pets:pet-detail", args=[pet.pk])
         )
