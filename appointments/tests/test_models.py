@@ -10,10 +10,6 @@ class AppointmentModelTest(TestCase):
         pet_label = Appointment._meta.get_field("pet").verbose_name
         self.assertEqual(pet_label, "Pet")
 
-    def test_date_label(self):
-        date_label = Appointment._meta.get_field("date").verbose_name
-        self.assertEqual(date_label, "Data da Consulta")
-
     def test_reason_label(self):
         reason_label = Appointment._meta.get_field("reason").verbose_name
         self.assertEqual(reason_label, "Motivo da Consulta")
@@ -55,7 +51,7 @@ class AppointmentModelTest(TestCase):
     def test_string_representation(self):
         appointment = mommy.make(Appointment)
         self.assertEqual(
-            str(appointment), f"{appointment.pet.name} - {appointment.date}"
+            str(appointment), f"{appointment.pet.name} - {appointment.created_date}"
         )
 
     def test_get_absolute_url(self):

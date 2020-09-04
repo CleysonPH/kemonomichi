@@ -7,7 +7,7 @@
       <div class="col-sm-12">
         <h2 class="page-header">
           <i class="fa fa-heartbeat"></i> Consulta
-          <small class="pull-right">Data: {{ appointment.date }}</small>
+          <small class="pull-right">Data: {{ appointment.created_date }}</small>
         </h2>
       </div>
     </div>
@@ -16,7 +16,7 @@
       <div class="col-sm-4 invoice-col">
         <strong>Consulta</strong>
         <br>
-        <strong>Data:</strong> {{ appointment.date }} <br>
+        <strong>Data:</strong> {{ appointment.created_date }} <br>
         <strong>Motivo:</strong> {{ appointment.reason }} <br>
       </div>
       <div class="col-sm-4 invoice-col">
@@ -33,7 +33,7 @@
       <div class="col-sm-12">
         <strong>Dados da Consulta</strong>
         <br>
-        <strong>Data:</strong> {{ appointment.date }} <br>
+        <strong>Data:</strong> {{ appointment.created_date }} <br>
         <strong>Motivo:</strong> {{ appointment.reason }} <br>
         <strong>Peso Atual:</strong> {{ appointment.current_weight }} <br>
         <strong>Medicamentos Prescritos:</strong> {{ appointment.prescribed_drugs }} <br>

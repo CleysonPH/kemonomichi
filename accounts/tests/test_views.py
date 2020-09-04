@@ -48,12 +48,12 @@ class SigninViewTest(TestCase):
         self.assertEqual(response.context["user"], self.user)
         self.assertTrue(response.context["user"].is_authenticated)
 
-    def test_redirects_to_client_list_when_login_successfully(self):
+    def test_redirects_to_dashboard_when_login_successfully(self):
         response = self.client.post(
             reverse("accounts:signin"), self.credentials, follow=True
         )
 
-        self.assertRedirects(response, reverse("clients:client-list"))
+        self.assertRedirects(response, reverse("core:dashboard"))
 
 
 class SiginoutViewTest(TestCase):

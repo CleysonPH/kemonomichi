@@ -38,7 +38,9 @@ def client_create(request):
 @login_required
 def client_detail(request, pk):
     client = get_object_or_404(Client, pk=pk)
-    appointments = Appointment.objects.filter(pet__owner_id=pk).all().order_by("-date")
+    appointments = (
+        Appointment.objects.filter(pet__owner_id=pk).all().order_by("-created_date")
+    )
 
     context = {
         "title": "Detalhes do Cliente",

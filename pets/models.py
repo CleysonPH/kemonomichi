@@ -1,8 +1,10 @@
 from django.db import models
 from django.urls import reverse
 
+from core.models import BaseModel
 
-class Pet(models.Model):
+
+class Pet(BaseModel):
     SPECIE_CHOICES = (
         ("CA", "Cachorro"),
         ("GA", "Gato"),
@@ -35,6 +37,7 @@ class Pet(models.Model):
     class Meta:
         verbose_name = "pet"
         verbose_name_plural = "pets"
+        ordering = ("-created_date",)
 
     def __str__(self):
         return self.name

@@ -4,8 +4,10 @@ from django.db import models
 from django.template.loader import render_to_string
 from django.urls import reverse
 
+from core.models import BaseModel
 
-class Appointment(models.Model):
+
+class Appointment(BaseModel):
     pet = models.ForeignKey(
         "pets.Pet",
         verbose_name="Pet",
@@ -13,7 +15,6 @@ class Appointment(models.Model):
         null=False,
         blank=False,
     )
-    date = models.DateField("Data da Consulta", auto_now=True, null=False, blank=False)
     reason = models.CharField(
         "Motivo da Consulta", max_length=200, null=False, blank=False
     )
@@ -27,9 +28,10 @@ class Appointment(models.Model):
     class Meta:
         verbose_name = "consulta"
         verbose_name_plural = "consultas"
+        ordering = ("-created_date",)
 
     def __str__(self):
-        return f"{self.pet.name} - {self.date}"
+        return f"{self.pet.name} - {self.created_date}"
 
     def get_absolute_url(self):
         return reverse("appointments:appointment-detail", kwargs={"pk": self.pk})

@@ -2,8 +2,10 @@ from django.db import models
 from django.urls import reverse
 from django_localflavor_br.br_states import STATE_CHOICES
 
+from core.models import BaseModel
 
-class Address(models.Model):
+
+class Address(BaseModel):
     street = models.CharField("Rua", max_length=50, null=False, blank=False)
     city = models.CharField("Cidade", max_length=30, null=False, blank=False)
     state = models.CharField(
@@ -18,7 +20,7 @@ class Address(models.Model):
         return f"{self.street}, {self.city} - {self.state}"
 
 
-class Client(models.Model):
+class Client(BaseModel):
     name = models.CharField("Nome", max_length=100, null=False, blank=False)
     email = models.EmailField("Email", null=False, blank=False)
     address = models.ForeignKey(
@@ -31,6 +33,7 @@ class Client(models.Model):
     class Meta:
         verbose_name = "cliente"
         verbose_name_plural = "clientes"
+        ordering = ("-created_date",)
 
     def __str__(self):
         return self.name
