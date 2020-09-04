@@ -6,17 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('employees', '0001_initial'),
+        ("employees", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='employee',
-            options={'verbose_name': 'funcionário', 'verbose_name_plural': 'funcionários'},
+            name="employee",
+            options={
+                "verbose_name": "funcionário",
+                "verbose_name_plural": "funcionários",
+            },
         ),
         migrations.AlterField(
-            model_name='employee',
-            name='role',
-            field=models.IntegerField(choices=[(1, 'Administrador'), (2, 'Veterinario'), (3, 'Financeiro'), (4, 'Atendimento')], verbose_name='Cargo'),
+            model_name="employee",
+            name="role",
+            field=models.IntegerField(
+                choices=[
+                    (1, "Administrador"),
+                    (2, "Veterinario"),
+                    (3, "Financeiro"),
+                    (4, "Atendimento"),
+                ],
+                verbose_name="Cargo",
+            ),
         ),
     ]

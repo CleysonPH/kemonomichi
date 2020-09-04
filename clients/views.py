@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -21,6 +22,8 @@ def client_create(request):
             client = client_form.save(commit=False)
             client.address = address
             client.save()
+
+            messages.success(request, f"Cliente {client.name} cadastrado com sucesso")
 
             return redirect(client.get_absolute_url())
     context = {
