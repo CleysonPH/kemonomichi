@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta do {{ appointment.pet.name }}</title>
+</head>
+<body>
+  <strong>Dados do Pet</strong> <br>
+  <strong>Nome: </strong> {{ appointment.pet.name }} <br>
+  <strong>Nascimento: </strong> {{ appointment.pet.birth_date }} <br>
+  <strong>Peso Atual: </strong> {{ appointment.current_weight }} <br>
+  <br>
+  <strong>Dados da Consulta</strong> <br>
+  <strong>Data: </strong> {{ appointment.date }} <br>
+  <strong>Motivo: </strong> {{ appointment.reason }} <br>
+  <strong>Medicamentos Prescritos: </strong> {{ appointment.prescribed_drugs }} <br>
+  <strong>Exames Prescritos: </strong> {{ appointment.prescribed_exams }} <br>
+  <br>
+</body>
+</html>

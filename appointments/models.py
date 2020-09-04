@@ -1,4 +1,7 @@
+from django.conf import settings
+from django.core.mail import send_mail
 from django.db import models
+from django.template.loader import render_to_string
 from django.urls import reverse
 
 
@@ -30,3 +33,15 @@ class Appointment(models.Model):
 
     def get_absolute_url(self):
         return reverse("appointments:appointment-detail", kwargs={"pk": self.pk})
+
+    def send_mail(self):
+        subject = "Resumo da consulta"
+        message = "Resumo da sua consulta"
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = [self.pet.owner.email]
+        html_message = render_to_string(
+            "appointments/appointment_mail.html", {"appointment": self}
+        )
+        send_mail(
+            subject, message, from_email, recipient_list, html_message=html_message
+        )

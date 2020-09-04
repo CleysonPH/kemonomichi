@@ -44,10 +44,21 @@
         <strong>Exames Prescritos:</strong> {{ appointment.prescribed_exams }} <br>
       </div>
     </div>
-
     <div class="row no-print">
-      <div class="col-sm-12">
-        <button type="button" class="btn btn-primary pull-right" onclick="window.print()">
+      <div class="col-xs-12">
+        <a
+          type="button"
+          class="btn btn-primary pull-right"
+          href="{% url 'appointments:appointment-send-mail' pk=appointment.pk %}"
+        >
+          <i class="fa fa-envelope"></i> Enviar email
+        </a>
+        <button
+          type="button"
+          class="btn btn-default pull-right"
+          style="margin-right: 5px;"
+          onclick="window.print()"
+        >
           <i class="fa fa-print"></i> Imprimir
         </button>
       </div>
