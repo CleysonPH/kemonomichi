@@ -40,15 +40,15 @@ class PetModelTest(TestCase):
 
     def test_string_representation(self):
         pet = mommy.make(Pet)
-        self.assertEquals(str(pet), pet.name)
+        self.assertEqual(str(pet), pet.name)
 
     def test_verbose_name(self):
         verbose_name = Pet._meta.verbose_name
-        self.assertEquals(str(verbose_name), "pet")
+        self.assertEqual(str(verbose_name), "pet")
 
     def test_verbose_name_plural(self):
         verbose_name_plural = Pet._meta.verbose_name_plural
-        self.assertEquals(str(verbose_name_plural), "pets")
+        self.assertEqual(str(verbose_name_plural), "pets")
 
     def test_absolute_url(self):
         pet = mommy.make(Pet)

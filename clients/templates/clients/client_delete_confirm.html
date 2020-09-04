@@ -13,9 +13,18 @@
       <h5><strong>Email:</strong> {{ client.email }}</h5>
       <h5><strong>CPF:</strong> {{ client.cpf }}</h5>
 
+    </div>
+
+    <div class="box-footer">
       <form method="POST">
         {% csrf_token %}
-        <button class="btn btn-danger" type="submit">Sim, tenho certeza</button>
+        <a
+          href="{{ request.META.HTTP_REFERER }}"
+          class="btn btn-default"
+        >
+          Não, me leve de volta!
+        </a>
+        <button class="btn btn-danger" type="submit">Sim, tenho certeza!</button>
       </form>
     </div>
   </div>

@@ -27,10 +27,16 @@
               <td>{{ client.birth_date }}</td>
               <td>{{ client.occupation }}</td>
               <td>
-                <a href="{% url 'clients:client-update' pk=client.pk %}">
+                <a
+                  href="{% url 'clients:client-update' pk=client.pk %}"
+                  class="btn btn-sm btn-warning"
+                >
                   Editar
                 </a>
-                <a href="{% url 'clients:client-delete' pk=client.pk %}">
+                <a
+                  href="{% url 'clients:client-delete' pk=client.pk %}"
+                  class="btn btn-sm btn-danger"
+                >
                   Deletar
                 </a>
               </td>

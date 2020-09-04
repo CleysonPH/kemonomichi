@@ -14,8 +14,8 @@ class EmployeeModelTest(TestCase):
 
     def test_verbose_name(self):
         verbose_name = Employee._meta.verbose_name
-        self.assertEquals(str(verbose_name), "funcionário")
+        self.assertEqual(str(verbose_name), "funcionário")
 
     def test_verbose_name_plural(self):
         verbose_name_plural = Employee._meta.verbose_name_plural
-        self.assertEquals(str(verbose_name_plural), "funcionários")
+        self.assertEqual(str(verbose_name_plural), "funcionários")

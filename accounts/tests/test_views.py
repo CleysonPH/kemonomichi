@@ -1,4 +1,4 @@
-from datetime import date
+from django.utils import timezone
 from django.test import TestCase
 from django.urls import reverse
 
@@ -23,7 +23,7 @@ class SigninViewTest(TestCase):
             email="test@mail.com",
             first_name="Test",
             last_name="User",
-            birth_date=date(1990, 1, 1),
+            birth_date=timezone.now(),
             role=1,
         )
 
@@ -68,7 +68,7 @@ class SiginoutViewTest(TestCase):
             email="test@mail.com",
             first_name="Test",
             last_name="User",
-            birth_date=date(1990, 1, 1),
+            birth_date=timezone.now(),
             role=1,
         )
 

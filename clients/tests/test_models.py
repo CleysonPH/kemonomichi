@@ -19,46 +19,46 @@ class AddressModelTest(TestCase):
     def test_street_label(self):
         address = Address.objects.get(pk=1)
         street_label = address._meta.get_field("street").verbose_name
-        self.assertEquals(street_label, "Rua")
+        self.assertEqual(street_label, "Rua")
 
     def test_street_max_length(self):
         address = Address.objects.get(pk=1)
         max_length = address._meta.get_field("street").max_length
-        self.assertEquals(max_length, 50)
+        self.assertEqual(max_length, 50)
 
     def test_city_label(self):
         address = Address.objects.get(pk=1)
         city_label = address._meta.get_field("city").verbose_name
-        self.assertEquals(city_label, "Cidade")
+        self.assertEqual(city_label, "Cidade")
 
     def test_city_max_length(self):
         address = Address.objects.get(pk=1)
         max_length = address._meta.get_field("city").max_length
-        self.assertEquals(max_length, 30)
+        self.assertEqual(max_length, 30)
 
     def test_state_label(self):
         address = Address.objects.get(pk=1)
         state_label = address._meta.get_field("state").verbose_name
-        self.assertEquals(state_label, "Estado")
+        self.assertEqual(state_label, "Estado")
 
     def test_state_max_length(self):
         address = Address.objects.get(pk=1)
         max_length = address._meta.get_field("state").max_length
-        self.assertEquals(max_length, 2)
+        self.assertEqual(max_length, 2)
 
     def test_string_representation(self):
         address = Address.objects.get(pk=1)
-        self.assertEquals(
+        self.assertEqual(
             str(address), f"{address.street}, {address.city} - {address.state}"
         )
 
     def test_verbose_name(self):
         verbose_name = Address._meta.verbose_name
-        self.assertEquals(str(verbose_name), "endereço")
+        self.assertEqual(str(verbose_name), "endereço")
 
     def test_verbose_name_plural(self):
         verbose_name_plural = Address._meta.verbose_name_plural
-        self.assertEquals(str(verbose_name_plural), "endereços")
+        self.assertEqual(str(verbose_name_plural), "endereços")
 
 
 class ClientModelTest(TestCase):
@@ -82,59 +82,59 @@ class ClientModelTest(TestCase):
     def test_name_label(self):
         client = Client.objects.get(pk=1)
         name_label = client._meta.get_field("name").verbose_name
-        self.assertEquals(name_label, "Nome")
+        self.assertEqual(name_label, "Nome")
 
     def test_name_max_length(self):
         client = Client.objects.get(pk=1)
         max_length = client._meta.get_field("name").max_length
-        self.assertEquals(max_length, 100)
+        self.assertEqual(max_length, 100)
 
     def test_email_label(self):
         client = Client.objects.get(pk=1)
         email_label = client._meta.get_field("email").verbose_name
-        self.assertEquals(email_label, "Email")
+        self.assertEqual(email_label, "Email")
 
     def test_address_label(self):
         client = Client.objects.get(pk=1)
         address_label = client._meta.get_field("address").verbose_name
-        self.assertEquals(address_label, "Endereço")
+        self.assertEqual(address_label, "Endereço")
 
     def test_cpf_label(self):
         client = Client.objects.get(pk=1)
         cpf_label = client._meta.get_field("cpf").verbose_name
-        self.assertEquals(cpf_label, "CPF")
+        self.assertEqual(cpf_label, "CPF")
 
     def test_cpf_max_length(self):
         client = Client.objects.get(pk=1)
         max_length = client._meta.get_field("cpf").max_length
-        self.assertEquals(max_length, 14)
+        self.assertEqual(max_length, 14)
 
     def test_birth_date_label(self):
         client = Client.objects.get(pk=1)
         birth_date_label = client._meta.get_field("birth_date").verbose_name
-        self.assertEquals(birth_date_label, "Data de Nascimento")
+        self.assertEqual(birth_date_label, "Data de Nascimento")
 
     def test_occupation_label(self):
         client = Client.objects.get(pk=1)
         occupation_label = client._meta.get_field("occupation").verbose_name
-        self.assertEquals(occupation_label, "Profissão")
+        self.assertEqual(occupation_label, "Profissão")
 
     def test_occupation_max_length(self):
         client = Client.objects.get(pk=1)
         max_length = client._meta.get_field("occupation").max_length
-        self.assertEquals(max_length, 25)
+        self.assertEqual(max_length, 25)
 
     def test_string_representation(self):
         client = Client.objects.get(pk=1)
-        self.assertEquals(str(client), client.name)
+        self.assertEqual(str(client), client.name)
 
     def test_verbose_name(self):
         verbose_name = Client._meta.verbose_name
-        self.assertEquals(str(verbose_name), "cliente")
+        self.assertEqual(str(verbose_name), "cliente")
 
     def test_verbose_name_plural(self):
         verbose_name_plural = Client._meta.verbose_name_plural
-        self.assertEquals(str(verbose_name_plural), "clientes")
+        self.assertEqual(str(verbose_name_plural), "clientes")
 
     def test_get_absolute_url(self):
         client = Client.objects.get(pk=1)
