@@ -18,6 +18,12 @@
 {% block nav_heading %}NAVEGAÇÃO PRINCIPAL{% endblock %}
 
 {% block nav_links %}
+  <li>
+    <a href="{% url 'core:dashboard' %}">
+      <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+    </a>
+  </li>
+
   <li class="treeview">
     <a href="#">
       <i class="fa fa-user"></i>

@@ -61,7 +61,9 @@
                     </span>
 
                     <h3 class="timeline-header">
-                      {{ appointment.pet.name }} realizou uma nova consulta
+                      <a href="{{ appointment.pet.get_absolute_url }}">
+                        {{ appointment.pet.name }}
+                      </a> realizou uma nova consulta
                     </h3>
 
                     <div class="timeline-body">
