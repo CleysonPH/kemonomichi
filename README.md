@@ -1,8 +1,9 @@
 [![time tracker](https://wakatime.com/badge/github/CleysonPH/kemonomichi.svg)](https://wakatime.com/badge/github/CleysonPH/kemonomichi)
+[![codecov](https://codecov.io/gh/CleysonPH/kemonomichi/branch/master/graph/badge.svg)](https://codecov.io/gh/CleysonPH/kemonomichi)
 
 # KemonoMICHI
 
-Projeto feito para fins de estudo, esse projeto é um gerenciador para clínicas veterinárias que permite com que os usuários possam cadastrar clientes, pets consultas.
+Projeto feito para fins de estudo, esse projeto é um gerenciador para clínicas veterinárias que permite com que os usuários possam cadastrar clientes, pets e consultas.
 
 ## Dependências de Produção
 
