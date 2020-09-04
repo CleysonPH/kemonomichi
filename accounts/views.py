@@ -18,7 +18,7 @@ def signin(request):
             if user is not None:
                 login(request, user)
 
-                return redirect("clients:client-list")
+                return redirect("core:dashboard")
 
     context = {
         "form": form,

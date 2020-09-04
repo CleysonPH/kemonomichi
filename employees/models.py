@@ -96,6 +96,7 @@ class Employee(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = "funcionário"
         verbose_name_plural = "funcionários"
+        ordering = ("-date_joined",)
 
     def clean(self):
         super().clean()

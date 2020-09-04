@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+{% load adminlte_helpers %}
+
+{% block page_name %}
+  {{ title }}
+{% endblock page_name %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-aqua"><i class="fa fa-user"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Clientes Cadastrados</span>
+          <span class="info-box-number">{{ clients|length }}</span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-red"><i class="fa fa-paw"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Pets Cadastrados</span>
+          <span class="info-box-number">{{ pets|length }}</span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+
+    <!-- fix for small devices only -->
+    <div class="clearfix visible-sm-block"></div>
+
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-green"><i class="fa fa-heartbeat"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Consultas Realizadas</span>
+          <span class="info-box-number">{{ appointments|length }}</span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      <div class="info-box">
+        <span class="info-box-icon bg-yellow"><i class="fa fa-briefcase"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Funcionários Cadastrados</span>
+          <span class="info-box-number">{{ employees|length }}</span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Últimos Clientes Cadastrados</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>Data de Nascimento</th>
+                  <th>Profissão</th>
+                  <th>Nº de Pets</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for client in clients %}
+                  <tr>
+                    <td><a href="{{ client.get_absolute_url }}">{{ client.pk }}</a></td>
+                    <td>{{ client.name }}</td>
+                    <td>{{ client.birth_date|date:"d/m/Y" }}</td>
+                    <td>{{ client.occupation }}</td>
+                    <td>{{ client.pet_set.all|length }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <a
+            href="{% url 'clients:client-create' %}"
+            class="btn btn-sm btn-info btn-flat pull-left"
+          >
+            Cadastrar novo cliente
+          </a>
+          <a
+            href="{% url 'clients:client-list' %}"
+            class="btn btn-sm btn-default btn-flat pull-right"
+          >
+            Ver todos os clientes
+          </a>
+        </div>
+        <!-- /.box-footer -->
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Últimos Pets Cadastrados</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table class="table no-margin">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>Dono</th>
+                  <th>Data de Nascimento</th>
+                  <th>Espécie</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for pet in pets %}
+                  <tr>
+                    <td><a href="{{ pet.get_absolute_url }}">{{ pet.pk }}</a></td>
+                    <td>{{ pet.name }}</td>
+                    <td>
+                      <a href="{{ pet.owner.get_absolute_url }}">
+                        {{ pet.owner.name }}
+                      </a>
+                    </td>
+                    <td>{{ pet.birth_date|date:"d/m/Y" }}</td>
+                    <td>{{ pet.get_specie_display }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer clearfix text-center">
+          <p class="text-muted">
+            Para cadastrar um novo pet entre na página de detalhes de um cliente
+          </p>
+        </div>
+        <!-- /.box-footer -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Consultas Realizadas Recentimente</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <ul class="products-list product-list-in-box">
+            {% for appointment in appointments %}
+              <!-- .item -->
+              <li class="item">
+                <div class="product-img">
+                  <i class="fa fa-paw" style="font-size: 50px;"></i>
+                </div>
+                <div class="product-info">
+                  <a
+                    href="{{ appointment.get_absolute_url }}"
+                    class="product-title"
+                  >
+                    {{ appointment.pet.name }}
+                    <span class="pull-right">{{ appointment.date|date:"d/m/Y" }}</span>
+                  </a>
+                  <span class="product-description">
+                    {{ appointment.reason }}
+                  </span>
+                </div>
+              </li>
+              <!-- /.item -->
+            {% endfor %}
+          </ul>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer text-center">
+          <a href="#" class="uppercase">Ver todas as consultas</a>
+        </div>
+        <!-- /.box-footer -->
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="box box-default">
+            <div class="box-header with-border">
+              <h3 class="box-title">Distribuição de Pets</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="chart-responsive">
+                    <canvas id="pieChart" height="160" width="205" style="width: 205px; height: 160px;"></canvas>
+                  </div>
+                  <!-- ./chart-responsive -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-4">
+                  <ul class="chart-legend clearfix">
+                    <li><i class="fa fa-circle-o text-green"></i> Cachorros</li>
+                    <li><i class="fa fa-circle-o text-red"></i> Gatos</li>
+                    <li><i class="fa fa-circle-o text-yellow"></i> Coelhos</li>
+                  </ul>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="box box-danger">
+            <div class="box-header with-border">
+              <h3 class="box-title">Últimos Funcionários</h3>
+
+              <div class="box-tools pull-right">
+                <span class="label label-danger">
+                  {{ employees|length }} Novos Funcionários
+                </span>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <ul class="users-list clearfix">
+                {% for employee in employees %}
+                  <li>
+                    <img src="{% avatar_url size=128 user=employee %}" alt="User Image">
+                    <a class="users-list-name" href="#">{{ employee.get_short_name }}</a>
+                    <span class="users-list-date">{{ employee.date_joined|date:"d/m/Y" }}</span>
+                  </li>
+                {% endfor %}
+              </ul>
+              <!-- /.users-list -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer text-center">
+              <a href="{% url 'employees:employee-list' %}" class="uppercase">
+                Ver todos os funcionários
+              </a>
+            </div>
+            <!-- /.box-footer -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block javascript %}
+  {{ block.super }}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
+
+
+  <script>
+    var config = {
+      type: "doughnut",
+      data: {
+        datasets: [{
+          data: [
+            {{ chart_data.num_dogs }},
+            {{ chart_data.num_cats }},
+            {{ chart_data.num_rabbits }},
+          ],
+          backgroundColor: ["#00a65a", "#f56954", "#f39c12"],
+        }],
+        labels: [
+          "Cachorros",
+          "Gatos",
+          "Coelhos"
+        ]
+      },
+      options: {
+				responsive: true,
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				},
+        legend: {
+          display: false
+        }
+			}
+    }
+    window.onload = function() {
+			var ctx = document.getElementById('pieChart').getContext('2d');
+			window.myDoughnut = new Chart(ctx, config);
+		};
+  </script>
+{% endblock javascript %}
