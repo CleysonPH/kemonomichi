@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h1 class="box-title">
+        {{ title }}
+      </h1>
+    </div>
+
+    <div class="box-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Pet</th>
+            <th>Dono</th>
+            <th>Peso Atual</th>
+            <th>Data da Consulta</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appointment in appointments %}
+            <tr>
+              <td>
+                <a href="{{ appointment.get_absolute_url }}">
+                  {{ appointment.pk }}
+                </a>
+              </td>
+              <td>
+                <a href="{{ appointment.pet.get_absolute_url }}">
+                  {{ appointment.pet.name }}
+                </a>
+              </td>
+              <td>
+                <a href="{{ appointment.pet.owner.get_absolute_url }}">
+                  {{ appointment.pet.owner.name }}
+                </a>
+              </td>
+              <td>{{ appointment.current_weight }}</td>
+              <td>{{ appointment.created_date }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock content %}

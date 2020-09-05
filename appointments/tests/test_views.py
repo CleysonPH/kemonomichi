@@ -192,3 +192,55 @@ class AppointmentDetailViewTest(TestCase):
         url = reverse("appointments:appointment-detail", args=[self.appointment.pk])
         response = self.client.get(url)
         self.assertRedirects(response, (reverse("accounts:signin") + f"?next={url}"))
+
+
+class AppointmentListViewTest(TestCase):
+    def setUp(self):
+        self.admin_credentials = {
+            "username": "admin_test_username",
+            "password": "admin_test_password",
+        }
+        self.admin_user = Employee.objects.create_user(
+            username=self.admin_credentials["username"],
+            password=self.admin_credentials["password"],
+            email="test@mail.com",
+            first_name="Test",
+            last_name="User",
+            birth_date=date(1990, 1, 1),
+            role=1,
+        )
+
+    def test_view_url_exists_at_desired_location(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get("/consultas/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(reverse("appointments:appointment-list"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(reverse("appointments:appointment-list"))
+        self.assertTemplateUsed(response, "appointments/appointment_list.html")
+
+    def test_page_title(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(reverse("appointments:appointment-list"))
+        self.assertIn("title", response.context)
+        self.assertEqual(response.context["title"], "Lista de Consultas")
+
+    def test_list_all_appointments(self):
+        self.client.login(**self.admin_credentials)
+        appointments = baker.make("appointments.Appointment", 10)
+        response = self.client.get(reverse("appointments:appointment-list"))
+        self.assertEqual(len(response.context["appointments"]), 10)
+
+        for appointment in appointments:
+            self.assertTrue(appointment in response.context["appointments"])
+
+    def test_redirect_to_signin_when_not_authenticated(self):
+        url = reverse("appointments:appointment-list")
+        response = self.client.get(url)
+        self.assertRedirects(response, (reverse("accounts:signin") + f"?next={url}"))

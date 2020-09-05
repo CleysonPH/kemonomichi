@@ -10,6 +10,18 @@ from .models import Appointment
 
 
 @login_required
+def appointments_list(request):
+    appointments = Appointment.objects.all()
+
+    context = {
+        "title": "Lista de Consultas",
+        "appointments": appointments,
+    }
+
+    return render(request, "appointments/appointment_list.html", context)
+
+
+@login_required
 @user_passes_test(lambda user: user.role in [1, 2])
 def appointment_create(request, pet_pk):
     pet = get_object_or_404(Pet, pk=pet_pk)
