@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
 
 from clients.models import Client
+
 from .forms import PetForm
 from .models import Pet
 
@@ -38,3 +40,22 @@ def pet_detail(request, pk):
     }
 
     return render(request, "pets/pet_detail.html", context)
+
+
+@login_required
+def pet_delete(request, pk):
+    pet = get_object_or_404(Pet, pk=pk)
+
+    if request.method == "POST":
+        pet.delete()
+
+        messages.success(request, f"O pet {pet.name} foi deletado com sucesso!")
+
+        return redirect(pet.owner.get_absolute_url())
+
+    context = {
+        "title": "Remover Pet",
+        "pet": pet,
+    }
+
+    return render(request, "pets/pet_delete_confirm.html", context)

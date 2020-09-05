@@ -134,3 +134,68 @@ class PetDetailViewTest(TestCase):
         url = reverse("pets:pet-detail", args=[self.pet.pk])
         response = self.client.get(url)
         self.assertRedirects(response, (reverse("accounts:signin") + f"?next={url}"))
+
+
+class ClientDeleteViewTest(TestCase):
+    def setUp(self):
+        self.admin_credentials = {
+            "username": "admin_test_username",
+            "password": "admin_test_password",
+        }
+        self.admin_user = Employee.objects.create_user(
+            username=self.admin_credentials["username"],
+            password=self.admin_credentials["password"],
+            email="test@mail.com",
+            first_name="Test",
+            last_name="User",
+            birth_date=date(1990, 1, 1),
+            role=1,
+        )
+        self.pet_data = baker.make("pets.Pet")
+
+    def test_view_url_exists_at_desired_location(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(f"/pets/{self.pet_data.pk}/remover/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(reverse("pets:pet-delete", args=[self.pet_data.pk]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(reverse("pets:pet-delete", args=[self.pet_data.pk]))
+        self.assertTemplateUsed(response, "pets/pet_delete_confirm.html")
+
+    def test_page_title(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(reverse("pets:pet-delete", args=[self.pet_data.pk]))
+        self.assertIn("title", response.context)
+        self.assertEqual(response.context["title"], "Remover Pet")
+
+    def test_show_correct_pet(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(reverse("pets:pet-delete", args=[self.pet_data.pk]))
+        self.assertIn("pet", response.context)
+        self.assertEqual(response.context["pet"], self.pet_data)
+
+    def test_redirects_to_client_detail_after_submit_form_with_success(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.post(reverse("pets:pet-delete", args=[self.pet_data.pk]))
+
+        self.assertRedirects(response, reverse("clients:client-detail", args=[1]))
+
+    def test_delete_pet_in_database_after_submit_form_with_success(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.post(
+            reverse("pets:pet-delete", args=[self.pet_data.pk]),
+        )
+
+        with self.assertRaises(Pet.DoesNotExist):
+            Pet.objects.get(pk=1)
+
+    def test_redirect_to_signin_when_not_authenticated(self):
+        url = reverse("pets:pet-delete", args=[self.pet_data.pk])
+        response = self.client.get(url)
+        self.assertRedirects(response, (reverse("accounts:signin") + f"?next={url}"))
