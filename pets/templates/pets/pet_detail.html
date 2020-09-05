@@ -26,6 +26,7 @@
           </ul>
           {% if request.user.role <= 2 %}
             <a href="{% url 'appointments:appointment-create' pet_pk=pet.pk %}" class="btn btn-primary btn-block">Cadastrar Consulta</a>
+            <a href="{% url 'pets:pet-update' pk=pet.pk %}" class="btn btn-warning btn-block">Editar o Pet</a>
             <a href="{% url 'pets:pet-delete' pk=pet.pk %}" class="btn btn-danger btn-block">Remover o Pet</a>
           {% endif %}
         </div>

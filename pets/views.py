@@ -43,6 +43,28 @@ def pet_detail(request, pk):
 
 
 @login_required
+def pet_update(request, pk):
+    pet = get_object_or_404(Pet, pk=pk)
+    pet_form = PetForm(instance=pet)
+
+    if request.method == "POST":
+        pet_form = PetForm(request.POST, instance=pet)
+
+        if pet_form.is_valid():
+            pet_form.save()
+
+            messages.success(request, f"O pet {pet.name} foi editado com sucesso!")
+
+            return redirect(pet.get_absolute_url())
+    context = {
+        "title": "Editar Pet",
+        "pet_form": pet_form,
+    }
+
+    return render(request, "pets/pet_form.html", context)
+
+
+@login_required
 def pet_delete(request, pk):
     pet = get_object_or_404(Pet, pk=pk)
 
@@ -52,7 +74,6 @@ def pet_delete(request, pk):
         messages.success(request, f"O pet {pet.name} foi deletado com sucesso!")
 
         return redirect(pet.owner.get_absolute_url())
-
     context = {
         "title": "Remover Pet",
         "pet": pet,

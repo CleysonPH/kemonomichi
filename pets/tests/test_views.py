@@ -136,7 +136,7 @@ class PetDetailViewTest(TestCase):
         self.assertRedirects(response, (reverse("accounts:signin") + f"?next={url}"))
 
 
-class ClientDeleteViewTest(TestCase):
+class PetDeleteViewTest(TestCase):
     def setUp(self):
         self.admin_credentials = {
             "username": "admin_test_username",
@@ -180,7 +180,7 @@ class ClientDeleteViewTest(TestCase):
         self.assertIn("pet", response.context)
         self.assertEqual(response.context["pet"], self.pet_data)
 
-    def test_redirects_to_client_detail_after_submit_form_with_success(self):
+    def test_redirects_to_pet_detail_after_submit_form_with_success(self):
         self.client.login(**self.admin_credentials)
         response = self.client.post(reverse("pets:pet-delete", args=[self.pet_data.pk]))
 
@@ -197,5 +197,95 @@ class ClientDeleteViewTest(TestCase):
 
     def test_redirect_to_signin_when_not_authenticated(self):
         url = reverse("pets:pet-delete", args=[self.pet_data.pk])
+        response = self.client.get(url)
+        self.assertRedirects(response, (reverse("accounts:signin") + f"?next={url}"))
+
+
+class PetUpdateViewTest(TestCase):
+    def setUp(self):
+        self.admin_credentials = {
+            "username": "admin_test_username",
+            "password": "admin_test_password",
+        }
+        self.admin_user = Employee.objects.create_user(
+            username=self.admin_credentials["username"],
+            password=self.admin_credentials["password"],
+            email="test@mail.com",
+            first_name="Test",
+            last_name="User",
+            birth_date=date(1990, 1, 1),
+            role=1,
+        )
+        self.pet_data = baker.make("pets.Pet")
+
+    def test_view_url_exists_at_desired_location(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(f"/pets/{self.pet_data.pk}/atualizar/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(reverse("pets:pet-update", args=[self.pet_data.pk]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(reverse("pets:pet-update", args=[self.pet_data.pk]))
+        self.assertTemplateUsed(response, "pets/pet_form.html")
+
+    def test_page_title(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(reverse("pets:pet-update", args=[self.pet_data.pk]))
+        self.assertIn("title", response.context)
+        self.assertEqual(response.context["title"], "Editar Pet")
+
+    def test_show_correct_pet(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(reverse("pets:pet-update", args=[self.pet_data.pk]))
+        self.assertIn("pet_form", response.context)
+        self.assertEqual(
+            response.context["pet_form"].instance,
+            self.pet_data,
+        )
+
+    def test_redirects_to_pet_detail_after_submit_form_with_success(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.post(
+            reverse("pets:pet-update", args=[self.pet_data.pk]),
+            {
+                "name": "Mimi",
+                "birth_date": date(1990, 12, 30),
+                "specie": "GA",
+                "color": "BR",
+            },
+        )
+
+        self.assertRedirects(
+            response, reverse("pets:pet-detail", args=[self.pet_data.pk])
+        )
+
+    def test_update_pet_in_database_after_submit_form_with_success(self):
+        self.client.login(**self.admin_credentials)
+        pet_data = {
+            "name": "Mimi",
+            "birth_date": date(1990, 12, 30),
+            "specie": "GA",
+            "color": "BR",
+        }
+
+        response = self.client.post(
+            reverse("pets:pet-update", args=[self.pet_data.pk]),
+            pet_data,
+        )
+
+        pet = Pet.objects.get(pk=self.pet_data.pk)
+
+        self.assertEqual(pet_data["name"], pet.name)
+        self.assertEqual(pet_data["birth_date"], pet.birth_date)
+        self.assertEqual(pet_data["specie"], pet.specie)
+        self.assertEqual(pet_data["color"], pet.color)
+
+    def test_redirect_to_signin_when_not_authenticated(self):
+        url = reverse("pets:pet-update", args=[self.pet_data.pk])
         response = self.client.get(url)
         self.assertRedirects(response, (reverse("accounts:signin") + f"?next={url}"))

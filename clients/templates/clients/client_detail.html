@@ -8,7 +8,9 @@
       <!-- Profile Image -->
       <div class="box box-primary">
         <div class="box-body box-profile">
-          <h3 class="profile-username text-center">{{ client.name }}</h3>
+          <h3 class="profile-username text-center">
+            {{ client.name }}
+          </h3>
 
           <p class="text-muted text-center">{{ client.occupation }}</p>
 
@@ -19,7 +21,26 @@
             <li class="list-group-item">
               <b>CPF</b> <span class="pull-right">{{ client.cpf }}</span>
             </li>
+            <li class="list-group-item">
+              <b>Email</b> <span class="pull-right">
+                <a href="mailto:{{ client.email }}">{{ client.email }}</a>
+              </span>
+            </li>
+            <li class="list-group-item">
+              <b>Estado</b> <span class="pull-right">{{ client.address.state }}</span>
+            </li>
+            <li class="list-group-item">
+              <b>Cidade</b> <span class="pull-right">{{ client.address.city }}</span>
+            </li>
+            <li class="list-group-item">
+              <b>Rua</b> <span class="pull-right">{{ client.address.street }}</span>
+            </li>
           </ul>
+
+          <div class="box-footer">
+            <a href="{% url 'clients:client-update' pk=client.pk %}" class="btn btn-warning btn-block">Editar Cliente</a>
+            <a href="{% url 'clients:client-delete' pk=client.pk %}" class="btn btn-danger btn-block">Remover Cliente</a>
+          </div>
         </div>
         <!-- /.box-body -->
       </div>
@@ -47,7 +68,10 @@
             Nenhum pet cadastrado
           </p>
         {% endfor %}
-          <a href="{% url 'pets:pet-create' owner_pk=client.pk %}" class="btn btn-primary btn-block">Cadastrar Pet</a>
+
+          <div class="box-footer">
+            <a href="{% url 'pets:pet-create' owner_pk=client.pk %}" class="btn btn-primary btn-block">Cadastrar Pet</a>
+          </div>
         </div>
         <!-- /.box-body -->
       </div>
