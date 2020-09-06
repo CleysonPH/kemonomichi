@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h1 class="box-title">Tem certeza que deseja remove a consulta abaixo?</h1>
+    </div>
+
+    <div class="box-body">
+      <h5>
+        <strong>Pet:</strong>
+        <a href="{{ appointment.pet.get_absolute_url }}">
+          {{ appointment.pet.name }}
+        </a>
+      </h5>
+      <h5>
+        <strong>Cliente:</strong>
+        <a href="{{ appointment.pet.owner.get_absolute_url }}">
+          {{ appointment.pet.owner.name }}
+        </a>
+      </h5>
+      <h5><strong>Data da Consulta:</strong> {{ appointment.created_date }}</h5>
+
+      <hr>
+
+      <h5><strong>Dados da consulta</strong></h5>
+      <h5><strong>Motivo:</strong> {{ appointment.reason }}</h5>
+      <h5><strong>Peso Atual:</strong> {{ appointment.current_weight }}</h5>
+      <h5><strong>Medicamentos Prescritos:</strong> {{ appointment.prescribed_drugs }}</h5>
+      <h5><strong>Exames Prescritos:</strong> {{ appointment.prescribed_exams }}</h5>
+    </div>
+
+    <div class="box-footer">
+      <form method="POST">
+        {% csrf_token %}
+        <a
+          href="{{ request.META.HTTP_REFERER }}"
+          class="btn btn-default"
+        >
+          Não, me leve de volta!
+        </a>
+        <button class="btn btn-danger" type="submit">Sim, tenho certeza!</button>
+      </form>
+    </div>
+  </div>
+{% endblock content %}

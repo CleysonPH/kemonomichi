@@ -42,6 +42,24 @@
     </div>
     <div class="row no-print">
       <div class="col-xs-12">
+        {% if request.user.role <= 2 %}
+          <a
+            type="button"
+            class="btn btn-warning pull-left"
+            style="margin-right: 5px;"
+            href="{% url 'appointments:appointment-send-mail' pk=appointment.pk %}"
+          >
+            <i class="fa fa-pencil"></i> Editar Consulta
+          </a>
+          <a
+            type="button"
+            class="btn btn-danger pull-left"
+            href="{% url 'appointments:appointment-delete' pk=appointment.pk %}"
+          >
+            <i class="fa fa-pencil"></i> Remover Consulta
+          </a>
+        {% endif %}
+
         <a
           type="button"
           class="btn btn-primary pull-right"

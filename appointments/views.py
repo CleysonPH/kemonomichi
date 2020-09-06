@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -54,6 +55,28 @@ def appointment_detail(request, pk):
     }
 
     return render(request, "appointments/appointment_detail.html", context)
+
+
+@login_required
+@user_passes_test(lambda user: user.role in [1, 2])
+def appointment_delete(request, pk):
+    appointment = get_object_or_404(Appointment, pk=pk)
+
+    if request.method == "POST":
+        appointment.delete()
+
+        messages.success(
+            request,
+            f"Consulta do pet {appointment.pet.name} foi removida com sucesso!",
+        )
+
+        return redirect("appointments:appointment-list")
+    context = {
+        "title": "Remover Consulta",
+        "appointment": appointment,
+    }
+
+    return render(request, "appointments/appointments_delete_confirm.html", context)
 
 
 @login_required
