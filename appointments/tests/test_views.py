@@ -246,6 +246,144 @@ class AppointmentListViewTest(TestCase):
         self.assertRedirects(response, (reverse("accounts:signin") + f"?next={url}"))
 
 
+class ClientUpdateViewTest(TestCase):
+    def setUp(self):
+        self.admin_credentials = {
+            "username": "admin_test_username",
+            "password": "admin_test_password",
+        }
+        self.admin_user = Employee.objects.create_user(
+            username=self.admin_credentials["username"],
+            password=self.admin_credentials["password"],
+            email="test@mail.com",
+            first_name="Test",
+            last_name="User",
+            birth_date=date(1990, 1, 1),
+            role=1,
+        )
+        self.appointment_data = baker.make("appointments.Appointment")
+
+    def test_view_url_exists_at_desired_location(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(f"/consultas/{self.appointment_data.pk}/editar/")
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_accessible_by_name(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(
+            reverse("appointments:appointment-update", args=[self.appointment_data.pk])
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(
+            reverse("appointments:appointment-update", args=[self.appointment_data.pk])
+        )
+        self.assertTemplateUsed(response, "appointments/appointment_form.html")
+
+    def test_page_title(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(
+            reverse("appointments:appointment-update", args=[self.appointment_data.pk])
+        )
+        self.assertIn("title", response.context)
+        self.assertEqual(response.context["title"], "Editar Consulta")
+
+    def test_show_correct_appointment(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.get(
+            reverse("appointments:appointment-update", args=[self.appointment_data.pk])
+        )
+        self.assertIn("appointment_form", response.context)
+        self.assertEqual(
+            response.context["appointment_form"].instance,
+            self.appointment_data,
+        )
+
+    def test_redirects_to_appointment_detail_after_submit_form_with_success(self):
+        self.client.login(**self.admin_credentials)
+        response = self.client.post(
+            reverse("appointments:appointment-update", args=[self.appointment_data.pk]),
+            {
+                "reason": "Dor na pata dianteira esquerda",
+                "current_weight": 10.5,
+            },
+        )
+
+        self.assertRedirects(
+            response,
+            reverse("appointments:appointment-detail", args=[self.appointment_data.pk]),
+        )
+
+    def test_update_appointment_in_database_after_submit_form_with_success(self):
+        self.client.login(**self.admin_credentials)
+        appointment_data = {
+            "reason": "Dor na pata dianteira esquerda",
+            "current_weight": 10.5,
+        }
+        response = self.client.post(
+            reverse("appointments:appointment-update", args=[self.appointment_data.pk]),
+            appointment_data,
+        )
+
+        appointment = Appointment.objects.get(pk=self.appointment_data.pk)
+
+        self.assertEquals(appointment_data["reason"], appointment.reason)
+        self.assertEquals(
+            appointment_data["current_weight"], appointment.current_weight
+        )
+
+    def test_redirect_to_signin_when_not_authenticated(self):
+        url = reverse(
+            "appointments:appointment-update", args=[self.appointment_data.pk]
+        )
+        response = self.client.get(url)
+        self.assertRedirects(response, (reverse("accounts:signin") + f"?next={url}"))
+
+    def test_redirect_to_signin_when_have_the_role_financeiro(self):
+        financeiro_credentials = {
+            "username": "financeiro_test_username",
+            "password": "financeiro_test_password",
+        }
+        financeiro_user = Employee.objects.create_user(
+            username=financeiro_credentials["username"],
+            password=financeiro_credentials["password"],
+            email="test@mail.com",
+            first_name="Test",
+            last_name="User",
+            birth_date=date(1990, 1, 1),
+            role=3,
+        )
+        self.client.login(**financeiro_credentials)
+        url = reverse(
+            "appointments:appointment-update", args=[self.appointment_data.pk]
+        )
+        response = self.client.get(url)
+        self.assertRedirects(response, (reverse("accounts:signin") + f"?next={url}"))
+
+    def test_redirect_to_signin_when_have_the_role_atendimento(self):
+        atendimento_credentials = {
+            "username": "atendimento_test_username",
+            "password": "atendimento_test_password",
+        }
+        atendimento_user = Employee.objects.create_user(
+            username=atendimento_credentials["username"],
+            password=atendimento_credentials["password"],
+            email="test@mail.com",
+            first_name="Test",
+            last_name="User",
+            birth_date=date(1990, 1, 1),
+            role=4,
+        )
+        self.client.login(**atendimento_credentials)
+        url = reverse(
+            "appointments:appointment-update", args=[self.appointment_data.pk]
+        )
+        response = self.client.get(url)
+        self.assertRedirects(response, (reverse("accounts:signin") + f"?next={url}"))
+
+
 class AppointmentDeleteViewTest(TestCase):
     def setUp(self):
         self.admin_credentials = {

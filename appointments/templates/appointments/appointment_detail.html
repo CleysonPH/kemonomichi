@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load filters %}
 
 {% block content %}
   <section class="invoice">
@@ -47,7 +46,7 @@
             type="button"
             class="btn btn-warning pull-left"
             style="margin-right: 5px;"
-            href="{% url 'appointments:appointment-send-mail' pk=appointment.pk %}"
+            href="{% url 'appointments:appointment-update' pk=appointment.pk %}"
           >
             <i class="fa fa-pencil"></i> Editar Consulta
           </a>

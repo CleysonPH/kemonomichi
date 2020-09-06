@@ -17,6 +17,9 @@
             <th>Dono</th>
             <th>Peso Atual</th>
             <th>Data da Consulta</th>
+            {% if request.user.role <= 2 %}
+              <th>Ações</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
@@ -39,6 +42,22 @@
               </td>
               <td>{{ appointment.current_weight }}</td>
               <td>{{ appointment.created_date }}</td>
+              {% if request.user.role <= 2 %}
+                <td>
+                  <a
+                    href="{% url 'appointments:appointment-update' pk=appointment.pk %}"
+                    class="btn btn-sm btn-warning"
+                  >
+                    Editar
+                  </a>
+                  <a
+                    href="{% url 'appointments:appointment-delete' pk=appointment.pk %}"
+                    class="btn btn-sm btn-danger"
+                  >
+                    Deletar
+                  </a>
+                </td>
+              {% endif %}
             </tr>
           {% endfor %}
         </tbody>

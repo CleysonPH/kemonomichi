@@ -59,6 +59,32 @@ def appointment_detail(request, pk):
 
 @login_required
 @user_passes_test(lambda user: user.role in [1, 2])
+def appointment_update(request, pk):
+    appointment = get_object_or_404(Appointment, pk=pk)
+    appointment_form = AppointmentForm(instance=appointment)
+
+    if request.method == "POST":
+        appointment_form = AppointmentForm(request.POST, instance=appointment)
+
+        if appointment_form.is_valid():
+            appointment_form.save()
+
+            messages.success(
+                request,
+                f"A consulta do pet {appointment.pet.name} foi editada com sucesso!",
+            )
+
+            return redirect(appointment.get_absolute_url())
+    context = {
+        "title": "Editar Consulta",
+        "appointment_form": appointment_form,
+    }
+
+    return render(request, "appointments/appointment_form.html", context)
+
+
+@login_required
+@user_passes_test(lambda user: user.role in [1, 2])
 def appointment_delete(request, pk):
     appointment = get_object_or_404(Appointment, pk=pk)
 

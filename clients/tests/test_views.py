@@ -285,7 +285,7 @@ class ClientUpdateViewTest(TestCase):
             response, reverse("clients:client-detail", args=[self.client_data.pk])
         )
 
-    def test_create_client_in_database_after_submit_form_with_success(self):
+    def test_update_client_in_database_after_submit_form_with_success(self):
         self.client.login(**self.admin_credentials)
         client_data = {
             "name": "Algusto da Silva",

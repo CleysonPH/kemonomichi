@@ -6,6 +6,7 @@ from .views import (
     appointment_send_mail,
     appointments_list,
     appointment_delete,
+    appointment_update,
 )
 
 app_name = "appointments"
@@ -15,4 +16,5 @@ urlpatterns = [
     path("<int:pk>/", appointment_detail, name="appointment-detail"),
     path("<int:pk>/enviar/email", appointment_send_mail, name="appointment-send-mail"),
     path("<int:pk>/remover/", appointment_delete, name="appointment-delete"),
+    path("<int:pk>/editar/", appointment_update, name="appointment-update"),
 ]
