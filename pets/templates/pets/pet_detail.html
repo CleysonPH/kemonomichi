@@ -45,7 +45,44 @@
           <div class="tab-pane active" id="timeline">
             <!-- The timeline -->
             <ul class="timeline timeline-inverse">
-              <!-- timeline time label -->
+              {% for appointment in pet.appointment_set.all %}
+                <!-- timeline time label -->
+                {% ifchanged appointment.created_date|date:"d/m/Y" %}
+                  <li class="time-label">
+                    <span class="bg-red">{{appointment.created_date|date:"d/m/Y"}}</span>
+                  </li>
+                {% endifchanged %}
+                <!-- /.timeline-label -->
+                <!-- timeline item -->
+                <li>
+                  <i class="fa fa-paw bg-blue"></i>
+
+                  <div class="timeline-item">
+                    <span class="time">
+                      <i class="fa fa-calendar"></i> {{ appointment.created_date }}
+                    </span>
+
+                    <h3 class="timeline-header">
+                      <a href="{{ appointment.pet.get_absolute_url }}">
+                        {{ appointment.pet.name }}
+                      </a> realizou uma nova consulta
+                    </h3>
+
+                    <div class="timeline-body">
+                        {{ appointment.reason }}
+                    </div>
+
+                    <div class="timeline-footer">
+                      <a href="{{ appointment.get_absolute_url }}" class="btn btn-primary btn-xs">
+                        Visualizar consulta
+                      </a>
+                    </div>
+                  </div>
+                </li>
+              <!-- END timeline item -->
+              {% endfor %}
+
+              {% comment %} <!-- timeline time label -->
               <li class="time-label">
                     <span class="bg-red">
                       {% now "SHORT_DATE_FORMAT" %}
@@ -80,7 +117,7 @@
                   </div>
                 </li>
               {% endfor %}
-              <!-- END timeline item -->
+              <!-- END timeline item --> {% endcomment %}
               <li>
                 <i class="fa fa-clock-o bg-gray"></i>
               </li>

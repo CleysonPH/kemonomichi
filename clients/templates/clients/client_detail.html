@@ -88,14 +88,14 @@
           <div class="tab-pane active" id="timeline">
             <!-- The timeline -->
             <ul class="timeline timeline-inverse">
-              <!-- timeline time label -->
-              <li class="time-label">
-                    <span class="bg-red">
-                      {% now "SHORT_DATE_FORMAT" %}
-                    </span>
-              </li>
-              <!-- /.timeline-label -->
               {% for appointment in appointments %}
+                <!-- timeline time label -->
+                {% ifchanged appointment.created_date|date:"d/m/Y" %}
+                    <li class="time-label">
+                      <span class="bg-red">{{appointment.created_date|date:"d/m/Y"}}</span>
+                    </li>
+                {% endifchanged %}
+                <!-- /.timeline-label -->
                 <!-- timeline item -->
                 <li>
                   <i class="fa fa-paw bg-blue"></i>
