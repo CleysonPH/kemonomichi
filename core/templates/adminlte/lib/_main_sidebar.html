@@ -9,7 +9,11 @@
           <img src="{% avatar_url size=90 %}" class="img-circle" alt="User Image">
       </div>
       <div class="pull-left info">
-          <p>{% firstof request.user.get_full_name request.user.username %}</p>
+          <p>
+            <a href="{% url 'employees:profile' %}">
+              {% firstof request.user.get_full_name request.user.username %}
+            </a>
+          </p>
           <p class="text-muted">{{ request.user.get_role_display }}</p>
       </div>
   </div>

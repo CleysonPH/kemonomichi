@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% load adminlte_helpers %}
+
+{% block content %}
+<section class="content">
+  <div class="row">
+    <div class="col-md-3">
+
+      <!-- Profile Image -->
+      <div class="box box-primary">
+        <div class="box-body box-profile">
+          <img
+            src="{% avatar_url size=128 %}"
+            alt="Imagem de perfil do funcionário {{ employee.get_full_name }}"
+            class="profile-user-img img-responsive img-circle"
+          />
+
+          <h3 class="profile-username text-center">{{ employee.get_full_name }}</h3>
+
+          <p class="text-muted text-center">{{ employee.get_role_display }}</p>
+
+          <ul class="list-group list-group-unbordered">
+            <li class="list-group-item">
+              <b>Email</b>
+              <a class="pull-right" href="mailto:{{ employee.email }}">{{ employee.email }}</a>
+            </li>
+            <li class="list-group-item">
+              <b>Data de Nascimento</b> <span class="pull-right">{{ employee.birth_date}}</span>
+            </li>
+            <li class="list-group-item">
+              <b>Membro desde:</b> <span class="pull-right">{{ employee.date_joined }}</span>
+            </li>
+            <li class="list-group-item">
+              <b>Último Login:</b> <span class="pull-right">{{ employee.last_login }}</span>
+            </li>
+          </ul>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-9">
+      <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#timeline" data-toggle="tab">Timeline</a></li>
+        </ul>
+        <div class="tab-content">
+          <!-- /.tab-pane -->
+          <div class="tab-pane active" id="timeline">
+            <!-- The timeline -->
+            <ul class="timeline timeline-inverse">
+              {% for log in logs %}
+                <!-- timeline time label -->
+                {% ifchanged log.action_time|date:"d/m/Y" %}
+                  <li class="time-label">
+                    <span class="bg-red">{{ log.action_time|date:"d/m/Y" }}</span>
+                  </li>
+                {% endifchanged %}
+                <!-- /.timeline-label -->
+                <!-- timeline item -->
+                <li>
+                  {% if log.action_flag == 1 %}
+                    {% firstof "bg-green" as icon_color %}
+                  {% elif log.action_flag == 2 %}
+                    {% firstof "bg-yellow" as icon_color %}
+                  {% elif log.action_flag == 3 %}
+                    {% firstof "bg-red" as icon_color %}
+                  {% endif %}
+
+                  {% if log.content_type.name == "pet" %}
+                    {% firstof "fa-paw" as icon %}
+                  {% elif log.content_type.name == "cliente" %}
+                    {% firstof "fa-user" as icon %}
+                  {% elif log.content_type.name == "consulta" %}
+                    {% firstof "fa-heartbeat" as icon %}
+                  {% elif log.content_type.name == "funcionário" %}
+                    {% firstof "fa-briefcase" as icon %}
+                  {% endif %}
+
+                  <i class="fa {{ icon }} {{ icon_color }}"></i>
+
+                  <div class="timeline-item">
+                    <span class="time">
+                      <i class="fa fa-calendar"></i> {{ log.action_time }}
+                    </span>
+
+                    <h3 class="timeline-header">
+                        {{ log.get_action_flag_display }} {{ log.content_type.name }} {{ log.object_repr }}
+                    </h3>
+
+                      {% if log.action_flag == 2 %}
+                        <div class="timeline-body">
+                            {{ log.get_change_message }}
+                        </div>
+                      {% endif %}
+                  </div>
+                </li>
+              <!-- END timeline item -->
+              {% endfor %}
+              <li>
+                <i class="fa fa-clock-o bg-gray"></i>
+              </li>
+            </ul>
+          </div>
+          <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+      </div>
+      <!-- /.nav-tabs-custom -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+
+</section>
+{% endblock content %}
