@@ -329,10 +329,8 @@ class ClientUpdateViewTest(TestCase):
 
         appointment = Appointment.objects.get(pk=self.appointment_data.pk)
 
-        self.assertEquals(appointment_data["reason"], appointment.reason)
-        self.assertEquals(
-            appointment_data["current_weight"], appointment.current_weight
-        )
+        self.assertEqual(appointment_data["reason"], appointment.reason)
+        self.assertEqual(appointment_data["current_weight"], appointment.current_weight)
 
     def test_redirect_to_signin_when_not_authenticated(self):
         url = reverse(

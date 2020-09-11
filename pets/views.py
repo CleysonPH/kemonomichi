@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from clients.models import Client
 
+from core.utils import log_addition, log_change, log_deletion
 from .forms import PetForm
 from .models import Pet
 
@@ -20,6 +21,9 @@ def pet_create(request, owner_pk):
             pet = pet_form.save(commit=False)
             pet.owner = owner
             pet.save()
+
+            log_addition(request, pet)
+            messages.success(request, f"O pet {pet.name} cadastrado com sucesso!")
 
             return redirect(pet.get_absolute_url())
     context = {
@@ -53,6 +57,7 @@ def pet_update(request, pk):
         if pet_form.is_valid():
             pet_form.save()
 
+            log_change(request, pet, pet_form, None)
             messages.success(request, f"O pet {pet.name} foi editado com sucesso!")
 
             return redirect(pet.get_absolute_url())
@@ -71,6 +76,7 @@ def pet_delete(request, pk):
     if request.method == "POST":
         pet.delete()
 
+        log_deletion(request, pet)
         messages.success(request, f"O pet {pet.name} foi deletado com sucesso!")
 
         return redirect(pet.owner.get_absolute_url())

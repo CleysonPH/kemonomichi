@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from appointments.models import Appointment
 
+from core.utils import log_addition, log_change, log_deletion
 from .forms import AddressForm, ClientForm
 from .models import Client
 
@@ -23,7 +24,8 @@ def client_create(request):
             client.address = address
             client.save()
 
-            messages.success(request, f"Cliente {client.name} cadastrado com sucesso")
+            log_addition(request, client)
+            messages.success(request, f"Cliente {client.name} cadastrado com sucesso!")
 
             return redirect(client.get_absolute_url())
     context = {
@@ -75,7 +77,10 @@ def client_update(request, pk):
 
         if client_form.is_valid() and address_form.is_valid():
             address_form.save()
-            client_form.save()
+            client = client_form.save()
+
+            log_change(request, client, client_form, None)
+            messages.success(request, f"Cliente {client.name} editado com sucesso!")
 
             return redirect(client.get_absolute_url())
     context = {
@@ -94,6 +99,9 @@ def client_delete(request, pk):
     if request.method == "POST":
         client.address.delete()
         client.delete()
+
+        log_deletion(request, client)
+        messages.success(request, f"Cliente {client.name} deletado com sucesso!")
 
         return redirect("clients:client-list")
 

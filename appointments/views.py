@@ -4,8 +4,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
+from core.utils import log_addition, log_change, log_deletion
 from pets.models import Pet
-
 from .forms import AppointmentForm
 from .models import Appointment
 
@@ -35,6 +35,12 @@ def appointment_create(request, pet_pk):
             appointment = appointment_form.save(commit=False)
             appointment.pet = pet
             appointment.save()
+
+            log_addition(request, appointment)
+            messages.success(
+                request,
+                f"A consulta do pet {appointment.pet.name} foi criada com sucesso!",
+            )
 
             return redirect(pet.get_absolute_url())
     context = {
@@ -67,8 +73,9 @@ def appointment_update(request, pk):
         appointment_form = AppointmentForm(request.POST, instance=appointment)
 
         if appointment_form.is_valid():
-            appointment_form.save()
+            appointment = appointment_form.save()
 
+            log_change(request, appointment, appointment_form, None)
             messages.success(
                 request,
                 f"A consulta do pet {appointment.pet.name} foi editada com sucesso!",
@@ -91,6 +98,7 @@ def appointment_delete(request, pk):
     if request.method == "POST":
         appointment.delete()
 
+        log_deletion(request, appointment)
         messages.success(
             request,
             f"Consulta do pet {appointment.pet.name} foi removida com sucesso!",
